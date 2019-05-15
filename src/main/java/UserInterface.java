@@ -11,7 +11,7 @@ public class UserInterface {
 
         JFrame frame = new JFrame("MyRPGMaker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300,300);
+        frame.setVisible(true);
 
         JPanel tiles = new JPanel(new GridLayout(3,3)); //maybe use GridBagLayout
 
@@ -27,8 +27,8 @@ public class UserInterface {
         menubar.add(file);
 
         JToolBar toolbar = new JToolBar();
-        toolbar.add(new JButton("button1"));
-        toolbar.add(new JButton("button2"));
+        toolbar.add(new JButton("Tool1"));
+        toolbar.add(new JButton("Tool2"));
 
         tiles.add(new JButton(center));
         tiles.add(new JButton(house));
@@ -36,12 +36,10 @@ public class UserInterface {
         tiles.add(new JButton(grass));
         tiles.add(new JButton(hero));
 
-        JPanel first = new JPanel(new BorderLayout());
+        JPanel first = new JPanel(new BorderLayout());  //Draw the map on a BufferedImage by extending Jpanel...
         first.setName("map1_name");
-        first.add(new JTextArea());
         JPanel second = new JPanel(new BorderLayout());
         second.setName("map2_name");
-        second.add(new JTextArea());
         tabs.add(first);
         tabs.add(second);
         maps.add(tabs);
@@ -50,6 +48,5 @@ public class UserInterface {
         frame.getContentPane().add(BorderLayout.NORTH, toolbar);
         frame.getContentPane().add(BorderLayout.WEST, tiles);
         frame.getContentPane().add(maps);
-        frame.setVisible(true);
     }
 }
