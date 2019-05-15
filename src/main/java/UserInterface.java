@@ -9,17 +9,47 @@ public class UserInterface {
         ImageIcon grass = new ImageIcon(UserInterface.class.getResource("backgroundTile/grass.png"));
         ImageIcon hero = new ImageIcon(UserInterface.class.getResource("npc/hero.png"));
 
-        JWindow window = new JWindow();
-        window.setSize(500, 500);
-        window.setVisible(true);
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 3));
-        window.setContentPane(panel);
+        JFrame frame = new JFrame("MyRPGMaker");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300,300);
 
-        panel.add(new JButton(center));
-        panel.add(new JButton(house));
-        panel.add(new JButton(sea));
-        panel.add(new JButton(grass));
-        panel.add(new JButton(hero));
+        JPanel tiles = new JPanel(new GridLayout(3,3)); //maybe use GridBagLayout
+
+        JPanel maps = new JPanel(new BorderLayout());
+        JTabbedPane tabs = new JTabbedPane();
+
+        JMenuBar menubar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenuItem open = new JMenuItem("Open");
+        JMenuItem save = new JMenuItem("Save");
+        file.add(open);
+        file.add(save);
+        menubar.add(file);
+
+        JToolBar toolbar = new JToolBar();
+        toolbar.add(new JButton("button1"));
+        toolbar.add(new JButton("button2"));
+
+        tiles.add(new JButton(center));
+        tiles.add(new JButton(house));
+        tiles.add(new JButton(sea));
+        tiles.add(new JButton(grass));
+        tiles.add(new JButton(hero));
+
+        JPanel first = new JPanel(new BorderLayout());
+        first.setName("map1_name");
+        first.add(new JTextArea());
+        JPanel second = new JPanel(new BorderLayout());
+        second.setName("map2_name");
+        second.add(new JTextArea());
+        tabs.add(first);
+        tabs.add(second);
+        maps.add(tabs);
+
+        frame.setJMenuBar(menubar);
+        frame.getContentPane().add(BorderLayout.NORTH, toolbar);
+        frame.getContentPane().add(BorderLayout.WEST, tiles);
+        frame.getContentPane().add(maps);
+        frame.setVisible(true);
     }
 }
