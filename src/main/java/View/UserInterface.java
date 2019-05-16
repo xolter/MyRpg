@@ -11,38 +11,11 @@ import java.util.Observer;
 
 public class UserInterface extends JFrame implements Observer {
 
-    private ImageIcon addImage(String img)
-    {
-        return new ImageIcon(UserInterface.class.getResource(img));
-    }
-
-    private JButton addButton(ImageIcon img, JPanel panel)
-    {
-        JButton res = new JButton(img);
-        res.setBackground(Color.ORANGE);
-        res.addActionListener(new Controller(this));
-        panel.add(res);
-        return res;
-    }
-
     public UserInterface(String title) {
         super(title);
 
-        ArrayList<String> background_list = get_resources("backgroundTile");
-        ArrayList<String> foreground_list = get_resources("foregroundObject");
-        ArrayList<String> npc_list = get_resources("npc");
-
-        ImageIcon center = addImage("../foregroundObject/center.png");
-        ImageIcon house = addImage("../foregroundObject/house.png");
-        ImageIcon sea = addImage("../backgroundTile/sea.png");
-        ImageIcon grass = addImage("../backgroundTile/grass.png");
-        ImageIcon hero = addImage("../npc/hero.png");
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
-        JPanel tiles = new JPanel(new GridLayout(3,3)); //maybe use GridBagLayout
-        tiles.setPreferredSize(new Dimension(getBounds().width / 3, tiles.getBounds().height));
 
         JPanel maps = new JPanel(new BorderLayout());
         JTabbedPane tabs = new JTabbedPane();
@@ -55,16 +28,6 @@ public class UserInterface extends JFrame implements Observer {
         file.add(save);
         menubar.add(file);
 
-        JToolBar toolbar = new JToolBar();
-        toolbar.add(new JButton("Tool1"));
-        toolbar.add(new JButton("Tool2"));
-        
-        JButton center_button = addButton(center, tiles);
-        JButton house_button = addButton(house, tiles);
-        JButton sea_button = addButton(sea, tiles);
-        JButton grass_button = addButton(grass, tiles);
-        JButton hero_button = addButton(hero, tiles);
-
         JPanel first = new JPanel(new BorderLayout());  //Draw the map on a BufferedImage by extending Jpanel...
         first.setName("map1_name");
         JPanel second = new JPanel(new BorderLayout());
@@ -74,8 +37,8 @@ public class UserInterface extends JFrame implements Observer {
         maps.add(tabs);
 
         setJMenuBar(menubar);
-        getContentPane().add(BorderLayout.NORTH, toolbar);
-        getContentPane().add(BorderLayout.WEST, tiles);
+        getContentPane().add(BorderLayout.NORTH, addToolbar());
+        getContentPane().add(BorderLayout.WEST, addTilesButton());
         getContentPane().add(maps);
     }
 
@@ -95,6 +58,68 @@ public class UserInterface extends JFrame implements Observer {
             }
         }
         return res;
+    }
+
+    private ImageIcon addImage(String img)
+    {
+        return new ImageIcon(UserInterface.class.getResource(img));
+    }
+
+    private JButton addButton(ImageIcon img, JPanel panel)
+    {
+        JButton res = new JButton(img);
+        res.setBackground(Color.ORANGE);
+        res.addActionListener(new Controller(this));
+        panel.add(res);
+        return res;
+    }
+
+    public JPanel addTilesButton()
+    {
+        JPanel tiles = new JPanel();
+        tiles.setPreferredSize(new Dimension(getBounds().width / 3, tiles.getBounds().height));
+        JTabbedPane tabs = new JTabbedPane();
+        ArrayList<String> background_list = get_resources("backgroundTile");
+        ArrayList<String> foreground_list = get_resources("foregroundObject");
+        ArrayList<String> npc_list = get_resources("npc");
+
+        JPanel back_tiles = new JPanel(new GridLayout(3,3));
+        back_tiles.setName("Background");
+        for (String imgname : background_list)
+        {
+            ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
+            addButton(img, back_tiles);
+        }
+        tabs.add(back_tiles);
+
+        JPanel fore_tiles = new JPanel(new GridLayout(3,3));
+        fore_tiles.setName("Foreground");
+        for (String imgname : foreground_list)
+        {
+            ImageIcon img = new ImageIcon(UserInterface.class.getResource("../foregroundObject/" + imgname));
+            addButton(img, fore_tiles);
+        }
+        tabs.add(fore_tiles);
+
+        JPanel npc_tiles = new JPanel(new GridLayout(3,3));
+        npc_tiles.setName("NPC");
+        for (String imgname : npc_list)
+        {
+            ImageIcon img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname));
+            addButton(img, npc_tiles);
+        }
+        tabs.add(npc_tiles);
+
+        tiles.add(tabs);
+        return tiles;
+    }
+
+    public JToolBar addToolbar()
+    {
+        JToolBar toolbar = new JToolBar();
+        toolbar.add(new JButton("Tool1"));
+        toolbar.add(new JButton("Tool2"));
+        return toolbar;
     }
 
     public void update(Observable observable, Object o) {
