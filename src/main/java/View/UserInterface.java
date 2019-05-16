@@ -76,6 +76,7 @@ public class UserInterface extends JFrame implements Observer {
         setVisible(true);
 
         JPanel tiles = new JPanel(new GridLayout(3,3)); //maybe use GridBagLayout
+        tiles.setPreferredSize(new Dimension(getBounds().width / 3, tiles.getBounds().height));
 
         JPanel maps = new JPanel(new BorderLayout());
         JTabbedPane tabs = new JTabbedPane();
