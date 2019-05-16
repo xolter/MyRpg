@@ -4,6 +4,8 @@ import Controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,60 +14,9 @@ public class UserInterface extends JFrame implements Observer {
     public UserInterface(String title) {
         super(title);
 
-
-        /*ImageIcon center = new ImageIcon(UserInterface.class.getResource("../foregroundObject/center.png"));
-        ImageIcon house = new ImageIcon(UserInterface.class.getResource("../foregroundObject/house.png"));
-        ImageIcon sea = new ImageIcon(UserInterface.class.getResource("../backgroundTile/sea.png"));
-        ImageIcon grass = new ImageIcon(UserInterface.class.getResource("../backgroundTile/grass.png"));
-        ImageIcon hero = new ImageIcon(UserInterface.class.getResource("../npc/hero.png"));
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 300);
-
-        JPanel tiles = new JPanel(new GridLayout(3, 3)); //maybe use GridBagLayout
-
-        JPanel maps = new JPanel(new BorderLayout());
-        JTabbedPane tabs = new JTabbedPane();
-
-        JMenuBar menubar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        JMenuItem open = new JMenuItem("Open");
-        JMenuItem save = new JMenuItem("Save");
-        file.add(open);
-        file.add(save);
-        menubar.add(file);
-
-        JToolBar toolbar = new JToolBar();
-        toolbar.add(new JButton("button1"));
-        toolbar.add(new JButton("button2"));
-
-        tiles.add(new JButton(center));
-
-        JButton house_button = new JButton(house);
-        //le bouton maison ecoute
-        house_button.addActionListener(new Controller(this));
-        tiles.add(house_button);
-
-        tiles.add(new JButton(sea));
-        tiles.add(new JButton(grass));
-        tiles.add(new JButton(hero));
-
-        JPanel first = new JPanel(new BorderLayout());
-        first.setName("map1_name");
-        first.add(new JTextArea());
-        JPanel second = new JPanel(new BorderLayout());
-        second.setName("map2_name");
-        second.add(new JTextArea());
-        tabs.add(first);
-        tabs.add(second);
-        maps.add(tabs);
-
-        setJMenuBar(menubar);
-        getContentPane().add(BorderLayout.NORTH, toolbar);
-        getContentPane().add(BorderLayout.WEST, tiles);
-        getContentPane().add(maps);
-        setVisible(true);*/
-
+        ArrayList<String> background_list = get_resources("backgroundTile");
+        ArrayList<String> foreground_list = get_resources("foregroundObject");
+        ArrayList<String> npc_list = get_resources("npc");
 
         ImageIcon center = new ImageIcon(UserInterface.class.getResource("../foregroundObject/center.png"));
         ImageIcon house = new ImageIcon(UserInterface.class.getResource("../foregroundObject/house.png"));
@@ -127,6 +78,24 @@ public class UserInterface extends JFrame implements Observer {
         getContentPane().add(BorderLayout.NORTH, toolbar);
         getContentPane().add(BorderLayout.WEST, tiles);
         getContentPane().add(maps);
+    }
+
+    public ArrayList<String> get_resources(String type)
+    {
+        ArrayList<String> res = new ArrayList<String>();
+        String path = "src/main/resources/" + type;
+        if (type.equals("npc") || type.equals("foregroundObject") || type.equals("backgroundTile"))
+        {
+            File[] images = new File(path).listFiles();
+            if (images == null)
+                System.out.println("Wrong pathname : " + path);
+            for (File img : images)
+            {
+                if (img.isFile())
+                    res.add(img.getName());
+            }
+        }
+        return res;
     }
 
     public void update(Observable observable, Object o) {
