@@ -12,6 +12,7 @@ public class UserInterface extends JFrame implements Observer {
     public UserInterface(String title) {
         super(title);
 
+
         /*ImageIcon center = new ImageIcon(UserInterface.class.getResource("../foregroundObject/center.png"));
         ImageIcon house = new ImageIcon(UserInterface.class.getResource("../foregroundObject/house.png"));
         ImageIcon sea = new ImageIcon(UserInterface.class.getResource("../backgroundTile/sea.png"));
@@ -92,15 +93,27 @@ public class UserInterface extends JFrame implements Observer {
         JToolBar toolbar = new JToolBar();
         toolbar.add(new JButton("Tool1"));
         toolbar.add(new JButton("Tool2"));
-
-        tiles.add(new JButton(center));
-
+        
+        JButton center_button = new JButton(center);
+        center_button.setBackground(Color.ORANGE);
+        center_button.addActionListener(new Controller(this)); //le bouton maison ecoute
+        tiles.add(center_button);
         JButton house_button = new JButton(house);
+        house_button.setBackground(Color.ORANGE);
         house_button.addActionListener(new Controller(this)); //le bouton maison ecoute
         tiles.add(house_button);
-        tiles.add(new JButton(sea));
-        tiles.add(new JButton(grass));
-        tiles.add(new JButton(hero));
+        JButton sea_button = new JButton(sea);
+        sea_button.setBackground(Color.ORANGE);
+        sea_button.addActionListener(new Controller(this));
+        tiles.add(sea_button);
+        JButton grass_button = new JButton(grass);
+        grass_button.setBackground(Color.ORANGE);
+        grass_button.addActionListener(new Controller(this));
+        tiles.add(grass_button);
+        JButton hero_button = new JButton(hero);
+        hero_button.setBackground(Color.ORANGE);
+        hero_button.addActionListener(new Controller(this));
+        tiles.add(hero_button);
 
         JPanel first = new JPanel(new BorderLayout());  //Draw the map on a BufferedImage by extending Jpanel...
         first.setName("map1_name");
