@@ -2,9 +2,12 @@ package View;
 
 import Controller.Controller;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -49,7 +52,12 @@ public class UserInterface extends JFrame implements Observer {
     public JButton addButton(ImageIcon img, JPanel panel)
     {
         JButton res = new JButton(img);
-        res.setBackground(Color.ORANGE);
+        if (panel.getName().equals("NPC"))
+            res.setBackground(Color.ORANGE);
+        else if (panel.getName().equals("Background"))
+            res.setBackground(Color.LIGHT_GRAY);
+        else
+            res.setBackground(Color.pink);
         res.addActionListener(new Controller(this));
         panel.add(res);
         return res;
@@ -124,5 +132,30 @@ public class UserInterface extends JFrame implements Observer {
 
     public void update(Observable observable, Object o) {
         System.out.println("damn");
+
+
+        //This code works, just need to precise which panel we want to draw and what size
+        JLabel lab = new JLabel(new ImageIcon(UserInterface.class.getResource("../npc/hero.png")));
+        this.add(lab);
+        this.repaint();
+        //
+
+        /*BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File("../npc/hero.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        final BufferedImage finalImage = image;
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g)
+            {
+                super.paintComponent(g);
+                g.drawImage(finalImage, 0, 0, null);
+            }
+        };
+        this.add(panel);*/
     }
 }
