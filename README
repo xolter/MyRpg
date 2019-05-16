@@ -1,0 +1,9 @@
+/* READNE */
+
+===== HOW TO RUN =====
+mvn package
+
+java -classpath target/classes Main
+/* OR */
+java -jar target/MyRPGMaker-1.0-SNAPSHOT.jar
+
