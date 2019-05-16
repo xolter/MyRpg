@@ -19,24 +19,10 @@ public class UserInterface extends JFrame implements Observer {
 
         JPanel maps = new JPanel(new BorderLayout());
         JTabbedPane tabs = new JTabbedPane();
-
-        JMenuBar menubar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        JMenuItem open = new JMenuItem("Open");
-        JMenuItem save = new JMenuItem("Save");
-        file.add(open);
-        file.add(save);
-        menubar.add(file);
-
-        JPanel first = new JPanel(new BorderLayout());  //Draw the map on a BufferedImage by extending Jpanel...
-        first.setName("map1_name");
-        JPanel second = new JPanel(new BorderLayout());
-        second.setName("map2_name");
-        tabs.add(first);
-        tabs.add(second);
         maps.add(tabs);
+        addMap(tabs);
 
-        setJMenuBar(menubar);
+        setJMenuBar(addMenubar());
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
         getContentPane().add(maps);
@@ -60,12 +46,7 @@ public class UserInterface extends JFrame implements Observer {
         return res;
     }
 
-    private ImageIcon addImage(String img)
-    {
-        return new ImageIcon(UserInterface.class.getResource(img));
-    }
-
-    private JButton addButton(ImageIcon img, JPanel panel)
+    public JButton addButton(ImageIcon img, JPanel panel)
     {
         JButton res = new JButton(img);
         res.setBackground(Color.ORANGE);
@@ -114,12 +95,31 @@ public class UserInterface extends JFrame implements Observer {
         return tiles;
     }
 
+    public JMenuBar addMenubar()
+    {
+        JMenuBar menubar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenuItem open = new JMenuItem("Open");
+        JMenuItem save = new JMenuItem("Save");
+        file.add(open);
+        file.add(save);
+        menubar.add(file);
+        return menubar;
+    }
+
     public JToolBar addToolbar()
     {
         JToolBar toolbar = new JToolBar();
         toolbar.add(new JButton("Tool1"));
         toolbar.add(new JButton("Tool2"));
         return toolbar;
+    }
+
+    public void addMap(JTabbedPane tabs)
+    {
+        JPanel map = new JPanel(new BorderLayout());
+        map.setName("map" + (tabs.getTabCount() + 1));
+        tabs.add(map);
     }
 
     public void update(Observable observable, Object o) {
