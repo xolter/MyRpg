@@ -16,7 +16,7 @@ public class Controller extends AbstractAction {
             this.map = new Map();
         }
         this.userInterface = userInterface;
-            map.addObserver(userInterface);
+        map.addObserver(userInterface);
 
     }
 

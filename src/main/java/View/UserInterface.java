@@ -11,6 +11,20 @@ import java.util.Observer;
 
 public class UserInterface extends JFrame implements Observer {
 
+    private ImageIcon addImage(String img)
+    {
+        return new ImageIcon(UserInterface.class.getResource(img));
+    }
+
+    private JButton addButton(ImageIcon img, JPanel panel)
+    {
+        JButton res = new JButton(img);
+        res.setBackground(Color.ORANGE);
+        res.addActionListener(new Controller(this));
+        panel.add(res);
+        return res;
+    }
+
     public UserInterface(String title) {
         super(title);
 
@@ -18,11 +32,11 @@ public class UserInterface extends JFrame implements Observer {
         ArrayList<String> foreground_list = get_resources("foregroundObject");
         ArrayList<String> npc_list = get_resources("npc");
 
-        ImageIcon center = new ImageIcon(UserInterface.class.getResource("../foregroundObject/center.png"));
-        ImageIcon house = new ImageIcon(UserInterface.class.getResource("../foregroundObject/house.png"));
-        ImageIcon sea = new ImageIcon(UserInterface.class.getResource("../backgroundTile/sea.png"));
-        ImageIcon grass = new ImageIcon(UserInterface.class.getResource("../backgroundTile/grass.png"));
-        ImageIcon hero = new ImageIcon(UserInterface.class.getResource("../npc/hero.png"));
+        ImageIcon center = addImage("../foregroundObject/center.png");
+        ImageIcon house = addImage("../foregroundObject/house.png");
+        ImageIcon sea = addImage("../backgroundTile/sea.png");
+        ImageIcon grass = addImage("../backgroundTile/grass.png");
+        ImageIcon hero = addImage("../npc/hero.png");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -45,26 +59,11 @@ public class UserInterface extends JFrame implements Observer {
         toolbar.add(new JButton("Tool1"));
         toolbar.add(new JButton("Tool2"));
         
-        JButton center_button = new JButton(center);
-        center_button.setBackground(Color.ORANGE);
-        center_button.addActionListener(new Controller(this)); //le bouton maison ecoute
-        tiles.add(center_button);
-        JButton house_button = new JButton(house);
-        house_button.setBackground(Color.ORANGE);
-        house_button.addActionListener(new Controller(this)); //le bouton maison ecoute
-        tiles.add(house_button);
-        JButton sea_button = new JButton(sea);
-        sea_button.setBackground(Color.ORANGE);
-        sea_button.addActionListener(new Controller(this));
-        tiles.add(sea_button);
-        JButton grass_button = new JButton(grass);
-        grass_button.setBackground(Color.ORANGE);
-        grass_button.addActionListener(new Controller(this));
-        tiles.add(grass_button);
-        JButton hero_button = new JButton(hero);
-        hero_button.setBackground(Color.ORANGE);
-        hero_button.addActionListener(new Controller(this));
-        tiles.add(hero_button);
+        JButton center_button = addButton(center, tiles);
+        JButton house_button = addButton(house, tiles);
+        JButton sea_button = addButton(sea, tiles);
+        JButton grass_button = addButton(grass, tiles);
+        JButton hero_button = addButton(hero, tiles);
 
         JPanel first = new JPanel(new BorderLayout());  //Draw the map on a BufferedImage by extending Jpanel...
         first.setName("map1_name");
