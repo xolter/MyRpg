@@ -5,22 +5,18 @@ import View.UserInterface;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Controller extends AbstractAction {
+public class Controller implements ActionListener{
 
-    private Map map;
-    private UserInterface userInterface;
+    static Map map;
 
-    public Controller(UserInterface userInterface) {
-        if (map == null) {
-            this.map = new Map();
-        }
-        this.userInterface = userInterface;
-        map.addObserver(userInterface);
-
+    public Controller(Map map) {
+        this.map = map;
     }
 
+    @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        map.add_foreground_object("foreground_object");
+        map.add_foreground_object("chef");
     }
 }

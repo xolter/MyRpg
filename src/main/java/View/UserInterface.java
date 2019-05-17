@@ -14,8 +14,12 @@ import java.util.Observer;
 
 public class UserInterface extends JFrame implements Observer {
 
-    public UserInterface(String title) {
+    private Controller controller;
+
+    public UserInterface(String title, Controller controller) {
         super(title);
+
+        this.controller = controller;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -58,7 +62,7 @@ public class UserInterface extends JFrame implements Observer {
             res.setBackground(Color.LIGHT_GRAY);
         else
             res.setBackground(Color.pink);
-        res.addActionListener(new Controller(this));
+        res.addActionListener(controller);
         panel.add(res);
         return res;
     }
