@@ -8,18 +8,19 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
+    private JPanelMap mapView;
+    private Hashtable<String, Image> backgroundTiles;
 
     public UserInterface(String title, Controller controller) {
         super(title);
 
         this.controller = controller;
+        this.backgroundTiles = new Hashtable<String, Image>();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -27,8 +28,7 @@ public class UserInterface extends JFrame implements Observer {
         JPanel maps = new JPanel(new BorderLayout());
         JTabbedPane tabs = new JTabbedPane();
         maps.add(tabs);
-        addMap(tabs);
-
+        mapView = addMap(tabs);
         setJMenuBar(addMenubar());
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
@@ -82,6 +82,10 @@ public class UserInterface extends JFrame implements Observer {
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
             addButton(img, back_tiles);
+
+            //setting the hashtable using the image icon
+            Image image = imageToBufferedImage(img.getImage());
+            backgroundTiles.put(imgname, image);
         }
         tabs.add(back_tiles);
 
@@ -107,6 +111,15 @@ public class UserInterface extends JFrame implements Observer {
         return tiles;
     }
 
+    public static BufferedImage imageToBufferedImage(Image im) {
+        BufferedImage bufferedImage = new BufferedImage
+                (im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        Graphics bg = bufferedImage.getGraphics();
+        bg.drawImage(im, 0, 0, null);
+        bg.dispose();
+        return bufferedImage;
+    }
+
     public JMenuBar addMenubar()
     {
         JMenuBar menubar = new JMenuBar();
@@ -127,22 +140,30 @@ public class UserInterface extends JFrame implements Observer {
         return toolbar;
     }
 
-    public void addMap(JTabbedPane tabs)
+    public JPanelMap addMap(JTabbedPane tabs)
     {
-        JPanel map = new JPanel(new BorderLayout());
+        /*JPanel map = new JPanel(new BorderLayout());
         map.setName("map" + (tabs.getTabCount() + 1));
         tabs.add(map);
+        return map;*/
+
+        JPanelMap map = new JPanelMap(new BorderLayout());
+        map.setName("map" + (tabs.getTabCount() + 1));
+        tabs.add(map);
+        return map;
     }
 
     public void update(Observable observable, Object o) {
         System.out.println("damn");
 
+        mapView.addTile(backgroundTiles.get("grass.png"));
+        mapView.repaint();
+
 
         //This code works, just need to precise which panel we want to draw and what size
-        JLabel lab = new JLabel(new ImageIcon(UserInterface.class.getResource("../npc/hero.png")));
+        /*JLabel lab = new JLabel(new ImageIcon(UserInterface.class.getResource("../npc/hero.png")));
         this.add(lab);
-        this.repaint();
-        //
+        this.repaint();*/
 
         /*BufferedImage image = null;
         try {
