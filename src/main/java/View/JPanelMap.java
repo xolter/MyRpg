@@ -22,18 +22,15 @@ public class JPanelMap extends JPanel{
         printGrid(this.getWidth(), this.getHeight(), g);
     }
 
-    public void addTile(Image im) {
+    public void addTile(Image im, int x, int y) {
         Graphics g = panelImage.getGraphics();
-        g.drawImage(im, 0, 0, null);
-        g.drawImage(im, 16, 16, null);
+        g.drawImage(im, x, y, null);
         g.dispose();
     }
 
 
     public void printGrid(int width, int height, Graphics g)
     {
-        //Graphics g = panelImage.getGraphics();
-        //Graphics g = this.getGraphics();
         for (int i = 0; i * 16 < height; i++)
         {
             g.setColor(Color.BLACK);
