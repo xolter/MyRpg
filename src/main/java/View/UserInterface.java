@@ -14,15 +14,14 @@ public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
     private JPanelMap mapView;
-    private Hashtable<String, Image> backgroundTiles;
-    private Hashtable<String, Image> foregroundTiles;
+    private Hashtable<String, Image> tiles;
 
     public UserInterface(String title, Controller controller) {
         super(title);
 
         this.controller = controller;
-        this.backgroundTiles = new Hashtable<String, Image>();
-        this.foregroundTiles = new Hashtable<String, Image>();
+
+        this.tiles = new Hashtable<String, Image>();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -55,15 +54,24 @@ public class UserInterface extends JFrame implements Observer {
         return res;
     }
 
-    public JButton addButton(ImageIcon img, JPanel panel)
+    public JButton addButton(ImageIcon img, JPanel panel, String tileName)
     {
+        //set hashtable
+        Image image = imageToBufferedImage(img.getImage());
+        tiles.put(tileName, image);
+
         JButton res = new JButton(img);
-        if (panel.getName().equals("NPC"))
+        if (panel.getName().equals("NPC")) {
             res.setBackground(Color.ORANGE);
-        else if (panel.getName().equals("Background"))
+        }
+        else if (panel.getName().equals("Background")) {
             res.setBackground(Color.LIGHT_GRAY);
-        else
+        }
+        else {
             res.setBackground(Color.pink);
+        }
+
+        res.setActionCommand(tileName);
         res.addActionListener(controller);
         panel.add(res);
         return res;
@@ -83,11 +91,7 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : background_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
-            addButton(img, back_tiles);
-
-            //setting the hashtable using the image icon
-            Image image = imageToBufferedImage(img.getImage());
-            backgroundTiles.put(imgname, image);
+            addButton(img, back_tiles, imgname);
         }
         tabs.add(back_tiles);
 
@@ -96,10 +100,7 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : foreground_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../foregroundObject/" + imgname));
-            addButton(img, fore_tiles);
-
-            Image image = imageToBufferedImage(img.getImage());
-            foregroundTiles.put(imgname, image);
+            addButton(img, fore_tiles, imgname);
         }
         tabs.add(fore_tiles);
 
@@ -108,7 +109,7 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : npc_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname));
-            addButton(img, npc_tiles);
+            addButton(img, npc_tiles, imgname);
         }
         tabs.add(npc_tiles);
 
@@ -161,16 +162,16 @@ public class UserInterface extends JFrame implements Observer {
     public void update(Observable observable, Object o) {
         System.out.println("damn");
 
-        mapView.addTile(backgroundTiles.get("grass.png"), 0, 0);
-        mapView.addTile(backgroundTiles.get("grass.png"), 0, 16);
-        mapView.addTile(backgroundTiles.get("grass.png"), 0, 32);
-        mapView.addTile(backgroundTiles.get("grass.png"), 16, 0);
-        mapView.addTile(backgroundTiles.get("grass.png"), 16, 16);
-        mapView.addTile(backgroundTiles.get("grass.png"), 16, 32);
-        mapView.addTile(backgroundTiles.get("grass.png"), 32, 0);
-        mapView.addTile(backgroundTiles.get("grass.png"), 32, 16);
-        mapView.addTile(backgroundTiles.get("grass.png"), 32, 32);
-        mapView.addTile(foregroundTiles.get("center.png"), 0, 0);
+        mapView.addTile(tiles.get("grass.png"), 0, 0);
+        mapView.addTile(tiles.get("grass.png"), 0, 16);
+        mapView.addTile(tiles.get("grass.png"), 0, 32);
+        mapView.addTile(tiles.get("grass.png"), 16, 0);
+        mapView.addTile(tiles.get("grass.png"), 16, 16);
+        mapView.addTile(tiles.get("grass.png"), 16, 32);
+        mapView.addTile(tiles.get("grass.png"), 32, 0);
+        mapView.addTile(tiles.get("grass.png"), 32, 16);
+        mapView.addTile(tiles.get("grass.png"), 32, 32);
+        mapView.addTile(tiles.get("center.png"), 0, 0);
 
         mapView.repaint();
 
