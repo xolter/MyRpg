@@ -8,23 +8,39 @@ public class JPanelMap extends JPanel{
 
     private final static int AREA_SIZE = 400;
     private BufferedImage panelImage;
+    private BufferedImage foreGround;
+    private ImageIcon foreGroundImage;
 
     public JPanelMap(BorderLayout borderLayout) {
         super(borderLayout);
         panelImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
+        foreGround = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
+        foreGroundImage = new ImageIcon();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (panelImage != null) {
             g.drawImage(panelImage, 0, 0, null);
         }
+        if (foreGroundImage != null) {
+            //foreGroundImage.paintIcon(this, g, 0, 0);
+            g.drawImage(foreGround, 0, 0, null);
+        }
+
         printGrid(this.getWidth(), this.getHeight(), g);
     }
 
-    public void addTile(Image im, int x, int y) {
+    public void addBackgroundTile(ImageIcon im, int x, int y) {
         Graphics g = panelImage.getGraphics();
-        g.drawImage(im, x, y, null);
+        g.drawImage(im.getImage(), x, y, null);
+        g.dispose();
+    }
+
+    public void addForegroundTile(ImageIcon im, int x, int y) {
+        Graphics g = foreGround.getGraphics();
+        g.drawImage(im.getImage(), x, y, null);
         g.dispose();
     }
 

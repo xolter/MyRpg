@@ -3,14 +3,24 @@ package Model;
 public class Tile {
     private boolean walkable;
     private boolean empty;
+    private boolean begin;
     private Type background;
     private Type foreground;
 
-    public Tile(boolean walkable, boolean empty, Type background, Type foreground) {
+    public Tile(boolean walkable, boolean empty, boolean begin, Type background, Type foreground) {
         this.walkable = walkable;
         this.empty = empty;
+        this.begin = begin;
         this.background = background;
         this.foreground = foreground;
+    }
+
+    public boolean isBegin() {
+        return begin;
+    }
+
+    public void setBegin(boolean begin) {
+        this.begin = begin;
     }
 
     public Type getBackground() { return background; }
