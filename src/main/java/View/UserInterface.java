@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Map;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +35,7 @@ public class UserInterface extends JFrame implements Observer {
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
         getContentPane().add(maps);
+        mapView.setTiles(tiles);
     }
 
     public ArrayList<String> get_resources(String type)
@@ -167,7 +169,7 @@ public class UserInterface extends JFrame implements Observer {
     public void update(Observable observable, Object o) {
         System.out.println("damn");
 
-        mapView.addBackgroundTile(tiles.get("grass.png"), 0, 0);
+        /*mapView.addBackgroundTile(tiles.get("grass.png"), 0, 0);
         mapView.addBackgroundTile(tiles.get("grass.png"), 0, 16);
         mapView.addBackgroundTile(tiles.get("grass.png"), 0, 32);
         mapView.addBackgroundTile(tiles.get("grass.png"), 16, 0);
@@ -176,7 +178,10 @@ public class UserInterface extends JFrame implements Observer {
         mapView.addBackgroundTile(tiles.get("grass.png"), 32, 0);
         mapView.addBackgroundTile(tiles.get("grass.png"), 32, 16);
         mapView.addBackgroundTile(tiles.get("grass.png"), 32, 32);
-        mapView.addForegroundTile(tiles.get("center.png"), 0, 0);
+        mapView.addForegroundTile(tiles.get("center.png"), 0, 16);*/
+
+        Map map = (Model.Map)observable;
+        mapView.updateMapView(map);
 
         mapView.repaint();
 

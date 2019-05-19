@@ -19,7 +19,7 @@ public class Map extends Observable {
     public void initTiles() {
         for(int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
-                tiles[i][j] = new Tile(false, true, true, null, null);
+                tiles[i][j] = new Tile(false, true, false, null, null);
             }
         }
     }
@@ -28,7 +28,7 @@ public class Map extends Observable {
         tiles[0][0].setBackground(type);
         tiles[0][0].setWalkable(true);
         tiles[0][0].setEmpty(true);
-        tiles[0][0].setBegin(true);
+        tiles[0][0].setBegin(false);
 
         setChanged();
         notifyObservers();
@@ -52,7 +52,19 @@ public class Map extends Observable {
         notifyObservers();
     }
 
-    public String get_name() {
+    public String getName() {
         return name;
+    }
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
