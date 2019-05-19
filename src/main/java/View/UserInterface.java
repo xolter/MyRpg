@@ -2,12 +2,12 @@ package View;
 
 import Controller.Controller;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class UserInterface extends JFrame implements Observer {
@@ -61,6 +61,8 @@ public class UserInterface extends JFrame implements Observer {
         tiles.put(tileName, image);
 
         JButton res = new JButton(img);
+
+        res.setPreferredSize(new Dimension(64, 64));
         if (panel.getName().equals("NPC")) {
             res.setBackground(Color.ORANGE);
         }
@@ -79,14 +81,14 @@ public class UserInterface extends JFrame implements Observer {
 
     public JPanel addTilesButton()
     {
-        JPanel tiles = new JPanel();
+        JPanel tiles = new JPanel(new BorderLayout());
         tiles.setPreferredSize(new Dimension(getBounds().width / 3, tiles.getBounds().height));
         JTabbedPane tabs = new JTabbedPane();
         ArrayList<String> background_list = get_resources("backgroundTile");
         ArrayList<String> foreground_list = get_resources("foregroundObject");
         ArrayList<String> npc_list = get_resources("npc");
 
-        JPanel back_tiles = new JPanel(new GridLayout(3,3));
+        JPanel back_tiles = new JPanel(new FlowLayout(FlowLayout.LEFT));
         back_tiles.setName("Background");
         for (String imgname : background_list)
         {
@@ -95,7 +97,7 @@ public class UserInterface extends JFrame implements Observer {
         }
         tabs.add(back_tiles);
 
-        JPanel fore_tiles = new JPanel(new GridLayout(3,3));
+        JPanel fore_tiles = new JPanel(new FlowLayout(FlowLayout.LEFT));
         fore_tiles.setName("Foreground");
         for (String imgname : foreground_list)
         {
@@ -104,12 +106,15 @@ public class UserInterface extends JFrame implements Observer {
         }
         tabs.add(fore_tiles);
 
-        JPanel npc_tiles = new JPanel(new GridLayout(3,3));
+        JPanel npc_tiles = new JPanel(new FlowLayout(FlowLayout.LEFT));
         npc_tiles.setName("NPC");
         for (String imgname : npc_list)
         {
-            ImageIcon img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname));
+            Image scale_img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname)).getImage();
+            scale_img = createImage(new FilteredImageSource(scale_img.getSource(), new CropImageFilter(16, 0, 32, 64)));
+            ImageIcon img = new ImageIcon(scale_img);
             addButton(img, npc_tiles, imgname);
+
         }
         tabs.add(npc_tiles);
 
