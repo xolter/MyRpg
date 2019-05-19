@@ -1,17 +1,50 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class Map extends Observable {
     private String name;
     private int width;
     private int height;
-    private ArrayList<Tile> tiles;
+    private Tile[][] tiles;
 
-    public void add_foreground_object(String type) {
-        //Definitely not the final code
-        this.name = type;
+    public Map(String name, int width, int height) {
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.tiles = new Tile[width][height];
+        initTiles();
+    }
+
+    public void initTiles() {
+        for(int i = 0; i < width; ++i) {
+            for (int j = 0; j < height; ++j) {
+                tiles[i][j] = new Tile(false, true, null, null);
+            }
+        }
+    }
+
+    public void addBackground(Type type) {
+        tiles[0][0].setBackground(type);
+        tiles[0][0].setWalkable(true);
+        tiles[0][0].setEmpty(true);
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addForeground(Type type) {
+        int w = type.getWidth();
+        int h = type.getHeight();
+
+        for (int i = 0; i < w; ++i) {
+            for (int j = 0; j < h; ++j) {
+                tiles[i][j].setForeground(type);
+                tiles[i][j].setWalkable(false);
+                tiles[i][j].setEmpty(false);
+            }
+        }
+
         setChanged();
         notifyObservers();
     }
