@@ -28,6 +28,8 @@ public class UserInterface extends JFrame implements Observer {
         setVisible(true);
 
         JPanel maps = new JPanel(new BorderLayout());
+        maps.addMouseListener(controller);
+        maps.addMouseMotionListener(controller);
         JTabbedPane tabs = new JTabbedPane();
         maps.add(tabs);
         mapView = addMap(tabs);
