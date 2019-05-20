@@ -160,10 +160,47 @@ public class UserInterface extends JFrame implements Observer {
         tabs.add(map);
         return map;*/
 
+        int[] map_size = get_mapsize();
         JPanelMap map = new JPanelMap(new BorderLayout());
         map.setName("map" + (tabs.getTabCount() + 1));
         tabs.add(map);
         return map;
+    }
+
+    public int[] get_mapsize()
+    {
+        JTextField width = new JTextField(3);
+        JTextField height = new JTextField(3);
+        JPanel mapsize_pan = new JPanel(new GridLayout(2,1));
+        mapsize_pan.add(new JLabel("width:"));
+        mapsize_pan.add(width);
+        mapsize_pan.add(new JLabel("height:"));
+        mapsize_pan.add(height);
+        int[] size = new int[]{100, 100};
+        int result = JOptionPane.showConfirmDialog(null, mapsize_pan,
+                "Map Size", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            int w = 100;
+            int h = 100;
+            if (!width.getText().equals("") && width.getText().matches("\\d+")) {
+                w = Integer.parseInt(width.getText());
+                if (w > 800)
+                    w = 800;
+                if (w < 1)
+                    w = 1;
+            }
+            if (!height.getText().equals("") && height.getText().matches("\\d+"))
+            {
+                h = Integer.parseInt(height.getText());
+                if (h > 800)
+                    h = 800;
+                if (h < 1)
+                    h = 1;
+            }
+            size[0] = w;
+            size[1] = h;
+        }
+        return size;
     }
 
     public void update(Observable observable, Object o) {
