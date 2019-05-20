@@ -155,28 +155,29 @@ public class UserInterface extends JFrame implements Observer {
 
     public JPanelMap addMap(JTabbedPane tabs)
     {
-        /*JPanel map = new JPanel(new BorderLayout());
-        map.setName("map" + (tabs.getTabCount() + 1));
-        tabs.add(map);
-        return map;*/
-
-        int[] map_size = get_mapsize();
+        Object[] map_options = get_mapoptions();
         JPanelMap map = new JPanelMap(new BorderLayout());
-        map.setName("map" + (tabs.getTabCount() + 1));
+        if (map_options[2].equals(""))
+            map.setName("map" + (tabs.getTabCount() + 1));
+        else
+            map.setName(map_options[2].toString());
         tabs.add(map);
         return map;
     }
 
-    public int[] get_mapsize()
+    public Object[] get_mapoptions()
     {
         JTextField width = new JTextField(3);
         JTextField height = new JTextField(3);
-        JPanel mapsize_pan = new JPanel(new GridLayout(2,1));
+        JTextField name = new JTextField(10);
+        JPanel mapsize_pan = new JPanel(new GridLayout(3,1));
         mapsize_pan.add(new JLabel("width:"));
         mapsize_pan.add(width);
         mapsize_pan.add(new JLabel("height:"));
         mapsize_pan.add(height);
-        int[] size = new int[]{100, 100};
+        mapsize_pan.add(new JLabel("name:"));
+        mapsize_pan.add(name);
+        Object[] options = new Object[3];
         int result = JOptionPane.showConfirmDialog(null, mapsize_pan,
                 "Map Size", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
@@ -197,10 +198,11 @@ public class UserInterface extends JFrame implements Observer {
                 if (h < 1)
                     h = 1;
             }
-            size[0] = w;
-            size[1] = h;
+            options[0] = w;
+            options[1] = h;
+            options[2] = name.getText();
         }
-        return size;
+        return options;
     }
 
     public void update(Observable observable, Object o) {
