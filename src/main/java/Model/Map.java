@@ -29,9 +29,6 @@ public class Map {
         tiles[0][0].setWalkable(true);
         tiles[0][0].setEmpty(true);
         tiles[0][0].setBegin(false);
-
-        /*setChanged();
-        notifyObservers();*/
     }
 
     public void addForeground(Type type) {
@@ -47,9 +44,6 @@ public class Map {
             }
         }
         tiles[0][0].setBegin(true);
-
-        /*setChanged();
-        notifyObservers();*/
     }
 
     public String getName() {
