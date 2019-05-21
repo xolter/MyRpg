@@ -19,6 +19,13 @@ public class JPanelMap extends JPanel{
     private Controller controller;
 
 
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        printGrid(width, height, g);
+
+    }
+
     public JPanelMap(BorderLayout layout, int width, int height, Controller controller) {
         super(layout);
         this.width = width;
@@ -26,6 +33,18 @@ public class JPanelMap extends JPanel{
         backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         this.controller = controller;
+        if (height >= 63)
+        {
+            JPanel newpanel = new JPanel();
+            JScrollPane scrollPane = new JScrollPane(newpanel);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            //scrollPane.setPreferredSize(new Dimension(300, 400));
+            this.add(scrollPane);
+            //scrollPane.setBounds(50, 30, 300, 50);
+            //JPanel panel = new JPanel(null);
+            //panel.setPreferredSize(new Dimension(500, 400));
+            //this.add(scrollPane);
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -38,7 +57,7 @@ public class JPanelMap extends JPanel{
             g.drawImage(foregroundImage, 0, 0, null);
         }
 
-        printGrid(width, height, g);
+        //printGrid(width, height, g);
     }
 
     public void addBackgroundTile(ImageIcon im, int x, int y) {
@@ -83,18 +102,26 @@ public class JPanelMap extends JPanel{
 
     public void printGrid(int width, int height, Graphics g)
     {
-        for (int i = 0; i * TILE_SIZE < height; i++)
+
+        int i;
+        for (i = 0; i * TILE_SIZE < height; i++)
         {
             g.setColor(Color.BLACK);
             g.drawLine(0, i * TILE_SIZE, width, i * TILE_SIZE);
         }
 
-        for (int i = 0; i * TILE_SIZE < width; i++)
+        g.drawLine(0, i * TILE_SIZE, width, i * TILE_SIZE);
+
+        for ( i = 0; i * TILE_SIZE < width; i++)
         {
             g.setColor(Color.BLACK);
             g.drawLine(i * TILE_SIZE, 0, i * TILE_SIZE, height);
         }
+
+        g.drawLine(i * TILE_SIZE,0, i * TILE_SIZE, height);
         g.dispose();
+
+
     }
 
     public static int getTileSize() {
