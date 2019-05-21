@@ -54,8 +54,10 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
             model.addForeground(Center);
         else if (evt.equals("house.png"))
             model.addForeground(House);
-        else
+        else if (evt.equals("hero.png"))
             model.addForeground(Hero);
+        else
+            System.exit(0);
     }
 
     @Override
