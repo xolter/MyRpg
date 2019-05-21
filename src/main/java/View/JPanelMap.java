@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Model.Map;
 import Model.Tile;
 import Model.Type;
@@ -14,11 +15,13 @@ public class JPanelMap extends JPanel{
     private final static int TILE_SIZE = 16;
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
+    private Controller controller;
 
-    public JPanelMap(BorderLayout borderLayout) {
+    public JPanelMap(BorderLayout borderLayout, Controller controller) {
         super(borderLayout);
         backgroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
+        this.controller = controller;
     }
 
     public void paintComponent(Graphics g) {
@@ -38,12 +41,20 @@ public class JPanelMap extends JPanel{
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
+        JLabel imglabel = new JLabel(im);
+        imglabel.addMouseListener(this.controller);
+        imglabel.addMouseMotionListener(this.controller);
+        this.add(imglabel);
     }
 
     public void addForegroundTile(ImageIcon im, int x, int y) {
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
+        JLabel imglabel = new JLabel(im);
+        imglabel.addMouseListener(this.controller);
+        imglabel.addMouseMotionListener(this.controller);
+        this.add(imglabel);
     }
 
     public void updateMapView(Map map) {

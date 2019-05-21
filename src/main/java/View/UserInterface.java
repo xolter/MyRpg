@@ -29,8 +29,8 @@ public class UserInterface extends JFrame implements Observer {
         setVisible(true);
 
         JPanel maps = new JPanel(new BorderLayout());
-        maps.addMouseListener(controller);
-        maps.addMouseMotionListener(controller);
+        //maps.addMouseListener(controller);
+        //maps.addMouseMotionListener(controller);
 
         mapTabs = new JTabbedPane();
         mapTabs.addChangeListener(this.controller);
@@ -101,7 +101,11 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : background_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
+            /*JLabel jlabelimg = new JLabel(img);
+            jlabelimg.addMouseListener(controller);
+            jlabelimg.addMouseMotionListener(controller);*/
             addButton(img, back_tiles, imgname);
+
         }
         tabs.add(back_tiles);
 
@@ -110,6 +114,9 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : foreground_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../foregroundObject/" + imgname));
+            /*JLabel jlabelimg = new JLabel(img);
+            jlabelimg.addMouseListener(controller);
+            jlabelimg.addMouseMotionListener(controller);*/
             addButton(img, fore_tiles, imgname);
         }
         tabs.add(fore_tiles);
@@ -121,6 +128,9 @@ public class UserInterface extends JFrame implements Observer {
             Image scale_img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname)).getImage();
             scale_img = createImage(new FilteredImageSource(scale_img.getSource(), new CropImageFilter(16, 0, 32, 64)));
             ImageIcon img = new ImageIcon(scale_img);
+            /*JLabel jlabelimg = new JLabel(img);
+            jlabelimg.addMouseListener(controller);
+            jlabelimg.addMouseMotionListener(controller);*/
             addButton(img, npc_tiles, imgname);
 
         }
@@ -164,7 +174,7 @@ public class UserInterface extends JFrame implements Observer {
     public JPanelMap addMapView()
     {
         Object[] map_options = get_mapoptions();
-        JPanelMap map = new JPanelMap(new BorderLayout());
+        JPanelMap map = new JPanelMap(new BorderLayout(), this.controller);
         String mapName;
         if (map_options[2].equals(""))
             mapName = "map" + (mapTabs.getTabCount() + 1);
