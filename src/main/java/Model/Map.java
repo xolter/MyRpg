@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Observable;
 
-public class Map extends Observable {
+public class Map {
     private String name;
     private int width;
     private int height;
@@ -30,8 +30,8 @@ public class Map extends Observable {
         tiles[0][0].setEmpty(true);
         tiles[0][0].setBegin(false);
 
-        setChanged();
-        notifyObservers();
+        /*setChanged();
+        notifyObservers();*/
     }
 
     public void addForeground(Type type) {
@@ -48,8 +48,8 @@ public class Map extends Observable {
         }
         tiles[0][0].setBegin(true);
 
-        setChanged();
-        notifyObservers();
+        /*setChanged();
+        notifyObservers();*/
     }
 
     public String getName() {

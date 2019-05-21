@@ -1,9 +1,12 @@
 package View;
 
 import Controller.Controller;
+import Controller.NewMapOptionPane;
 import Model.Map;
+import Model.Model;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
@@ -14,8 +17,9 @@ import java.util.*;
 public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
-    private JPanelMap mapView;
-    private Hashtable<String, ImageIcon> tiles;
+    private ArrayList<JPanelMap> mapViews;
+    private JTabbedPane mapTabs;
+    private static Hashtable<String, ImageIcon> tiles;
 
     public UserInterface(String title, Controller controller) {
         super(title);
@@ -30,14 +34,24 @@ public class UserInterface extends JFrame implements Observer {
         JPanel maps = new JPanel(new BorderLayout());
         maps.addMouseListener(controller);
         maps.addMouseMotionListener(controller);
-        JTabbedPane tabs = new JTabbedPane();
-        maps.add(tabs);
-        mapView = addMap(tabs);
+
+        //JTabbedPane tabs = new JTabbedPane();
+        //maps.add(tabs);
+        //mapView = addMap(tabs);
+
+        mapTabs = new JTabbedPane();
+        mapTabs.addChangeListener(this.controller);
+        maps.add(mapTabs);
+
+        mapViews = new ArrayList<JPanelMap>();
+        //JPanelMap mapView = addMapView();
+        mapViews.add(addMapView());
+        //mapView = addMap();
+        
         setJMenuBar(addMenubar());
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
         getContentPane().add(maps);
-        mapView.setTiles(tiles);
     }
 
     public ArrayList<String> get_resources(String type)
@@ -150,20 +164,26 @@ public class UserInterface extends JFrame implements Observer {
     public JToolBar addToolbar()
     {
         JToolBar toolbar = new JToolBar();
-        toolbar.add(new JButton("Tool1"));
+        JButton newMap = new JButton("New map");
+        newMap.addActionListener(new NewMapOptionPane(this));
+        toolbar.add(newMap);
         toolbar.add(new JButton("Tool2"));
         return toolbar;
     }
 
-    public JPanelMap addMap(JTabbedPane tabs)
+    public JPanelMap addMapView()
     {
         Object[] map_options = get_mapoptions();
         JPanelMap map = new JPanelMap(new BorderLayout());
+        String mapName;
         if (map_options[2].equals(""))
-            map.setName("map" + (tabs.getTabCount() + 1));
+            mapName = "map" + (mapTabs.getTabCount() + 1);
         else
-            map.setName(map_options[2].toString());
-        tabs.add(map);
+            mapName = map_options[2].toString();
+        map.setName(mapName);
+        mapTabs.add(map);
+        mapViews.add(map);
+        controller.actionAddMap(mapName, (Integer)map_options[0], (Integer)map_options[1]); //Create new map in database
         return map;
     }
 
@@ -221,33 +241,21 @@ public class UserInterface extends JFrame implements Observer {
         mapView.addBackgroundTile(tiles.get("grass.png"), 32, 32);
         mapView.addForegroundTile(tiles.get("center.png"), 0, 16);*/
 
-        Map map = (Model.Map)observable;
-        mapView.updateMapView(map);
-
-        mapView.repaint();
-
-
-        //This code works, just need to precise which panel we want to draw and what size
-        /*JLabel lab = new JLabel(new ImageIcon(UserInterface.class.getResource("../npc/hero.png")));
-        this.add(lab);
-        this.repaint();*/
-
-        /*BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File("../npc/hero.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        Model model = (Model)observable;
+        int currIndex = model.getCurrentIndex();
+        //System.out.println("model curr = " + currIndex);
+        //System.out.println("tabs curr = " + mapTabs.getSelectedIndex());
+        //JPanelMap mapView = mapViews.get(currIndex);
+        //mapView.updateMapView(model.getCurrentMap());
+        //mapView.repaint();
+        for (int i = 0; i < model.getMaps().size(); ++i) {
+            JPanelMap map = mapViews.get(i);
+            map.updateMapView(model.getMaps().get(i));
+            map.repaint();
         }
+    }
 
-        final BufferedImage finalImage = image;
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g)
-            {
-                super.paintComponent(g);
-                g.drawImage(finalImage, 0, 0, null);
-            }
-        };
-        this.add(panel);*/
+    public static Hashtable<String, ImageIcon> getTiles() {
+        return tiles;
     }
 }

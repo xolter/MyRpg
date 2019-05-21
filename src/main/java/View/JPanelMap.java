@@ -7,19 +7,17 @@ import Model.Type;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Hashtable;
 
 public class JPanelMap extends JPanel{
 
     private final static int AREA_SIZE = 400;
     private final static int TILE_SIZE = 16;
-    private Hashtable<String, ImageIcon> tiles;
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
 
     public JPanelMap(BorderLayout borderLayout) {
         super(borderLayout);
-        tiles = new Hashtable<String, ImageIcon>();
+        //tiles = new Hashtable<String, ImageIcon>();
         backgroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
     }
@@ -56,10 +54,12 @@ public class JPanelMap extends JPanel{
                 Type backType = mapTiles[i][j].getBackground();
                 Type foreType = mapTiles[i][j].getForeground();
                 if (backType != null) {
-                    addBackgroundTile(tiles.get(backType.getName()), i * TILE_SIZE, j * TILE_SIZE);
+                    addBackgroundTile(UserInterface.getTiles()
+                                      .get(backType.getName()), i * TILE_SIZE, j * TILE_SIZE);
                 }
                 if (foreType != null && mapTiles[i][j].isBegin()) {
-                    addForegroundTile(tiles.get(foreType.getName()), i * TILE_SIZE, j * TILE_SIZE);
+                    addForegroundTile(UserInterface.getTiles()
+                                      .get(foreType.getName()), i * TILE_SIZE, j * TILE_SIZE);
                 }
             }
         }
@@ -79,9 +79,5 @@ public class JPanelMap extends JPanel{
             g.drawLine(i * TILE_SIZE, 0, i * TILE_SIZE, height);
         }
         g.dispose();
-    }
-
-    public void setTiles(Hashtable<String, ImageIcon> tiles) {
-        this.tiles = tiles;
     }
 }

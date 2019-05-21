@@ -1,5 +1,6 @@
 import Controller.Controller;
 import Model.Map;
+import Model.Model;
 import View.UserInterface;
 
 import javax.swing.*;
@@ -10,9 +11,10 @@ import java.util.Observer;
 
 public class Main {
     public static void main(String[] args) {
-        Map map = new Map("world", 100, 100);
-        Controller controller = new Controller(map);
+        //Map map = new Map("world", 100, 100);
+        Model model = new Model();
+        Controller controller = new Controller(model);
         UserInterface userInterface = new UserInterface("MyRpgMaker", controller);
-        map.addObserver(userInterface);
+        model.addObserver(userInterface);
     }
 }
