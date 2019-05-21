@@ -19,7 +19,8 @@ public class JPanelMap extends JPanel{
     private Controller controller;
 
 
-    public JPanelMap(int width, int height) {
+    public JPanelMap(BorderLayout layout, int width, int height, Controller controller) {
+        super(layout);
         this.width = width;
         this.height = height;
         backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -44,6 +45,7 @@ public class JPanelMap extends JPanel{
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
+
         JLabel imglabel = new JLabel(im);
         imglabel.addMouseListener(this.controller);
         imglabel.addMouseMotionListener(this.controller);
@@ -54,6 +56,7 @@ public class JPanelMap extends JPanel{
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
+
         JLabel imglabel = new JLabel(im);
         imglabel.addMouseListener(this.controller);
         imglabel.addMouseMotionListener(this.controller);
