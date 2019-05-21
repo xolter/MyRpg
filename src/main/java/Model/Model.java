@@ -41,17 +41,18 @@ public class Model extends Observable {
     }
 
     public void addBackground(Type type) {
-        getCurrentMap().addBackground(type);
-
-
-        setChanged();
-        notifyObservers();
+        if (getCurrentMap() != null) {
+            getCurrentMap().addBackground(type);
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public void addForeground(Type type) {
-        getCurrentMap().addForeground(type);
-
-        setChanged();
-        notifyObservers();
+        if (getCurrentMap() != null) {
+            getCurrentMap().addForeground(type);
+            setChanged();
+            notifyObservers();
+        }
     }
 }

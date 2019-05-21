@@ -34,7 +34,8 @@ public class Map {
     public void addForeground(Type type) {
         int w = type.getWidth();
         int h = type.getHeight();
-
+        if (width < w || height < h)
+            return;
         for (int i = 0; i < w; ++i) {
             for (int j = 0; j < h; ++j) {
                 tiles[i][j].setForeground(type);
