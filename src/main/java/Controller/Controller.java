@@ -44,18 +44,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //Map map = model.getCurrentMap();
         String evt = actionEvent.getActionCommand();
-        /*if (evt.equals("grass.png"))
-            map.addBackground(Grass);
-        else if (evt.equals("sea.png"))
-            map.addBackground(Sea);
-        else if (evt.equals("center.png"))
-            map.addForeground(Center);
-        else if (evt.equals("house.png"))
-            map.addForeground(House);
-        else
-            map.addForeground(Hero);*/
         if (evt.equals("grass.png"))
             model.addBackground(Grass);
         else if (evt.equals("sea.png"))
@@ -70,7 +59,6 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     @Override
     public void stateChanged(ChangeEvent changeEvent) {
-        System.out.println("changed");
         JTabbedPane mapTabs = (JTabbedPane) changeEvent.getSource();
         model.setCurrentMap(mapTabs.getSelectedIndex());
     }

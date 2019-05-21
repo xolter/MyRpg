@@ -2,11 +2,9 @@ package View;
 
 import Controller.Controller;
 import Controller.NewMapOptionPane;
-import Model.Map;
 import Model.Model;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
@@ -17,7 +15,6 @@ import java.util.*;
 public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
-    private ArrayList<JPanelMap> mapViews;
     private JTabbedPane mapTabs;
     private static Hashtable<String, ImageIcon> tiles;
 
@@ -35,19 +32,13 @@ public class UserInterface extends JFrame implements Observer {
         maps.addMouseListener(controller);
         maps.addMouseMotionListener(controller);
 
-        //JTabbedPane tabs = new JTabbedPane();
-        //maps.add(tabs);
-        //mapView = addMap(tabs);
-
         mapTabs = new JTabbedPane();
         mapTabs.addChangeListener(this.controller);
         maps.add(mapTabs);
 
-        mapViews = new ArrayList<JPanelMap>();
-        //JPanelMap mapView = addMapView();
-        mapViews.add(addMapView());
-        //mapView = addMap();
-        
+        addMapView(); //force add map
+
+
         setJMenuBar(addMenubar());
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
@@ -75,7 +66,6 @@ public class UserInterface extends JFrame implements Observer {
     public JButton addButton(ImageIcon img, JPanel panel, String tileName)
     {
         //set hashtable
-        //Image image = imageToBufferedImage(img.getImage());
         tiles.put(tileName, img);
 
         JButton res = new JButton(img);
@@ -182,7 +172,6 @@ public class UserInterface extends JFrame implements Observer {
             mapName = map_options[2].toString();
         map.setName(mapName);
         mapTabs.add(map);
-        mapViews.add(map);
         controller.actionAddMap(mapName, (Integer)map_options[0], (Integer)map_options[1]); //Create new map in database
         return map;
     }
@@ -228,8 +217,6 @@ public class UserInterface extends JFrame implements Observer {
     }
 
     public void update(Observable observable, Object o) {
-        System.out.println("damn");
-
         /*mapView.addBackgroundTile(tiles.get("grass.png"), 0, 0);
         mapView.addBackgroundTile(tiles.get("grass.png"), 0, 16);
         mapView.addBackgroundTile(tiles.get("grass.png"), 0, 32);
@@ -243,16 +230,9 @@ public class UserInterface extends JFrame implements Observer {
 
         Model model = (Model)observable;
         int currIndex = model.getCurrentIndex();
-        //System.out.println("model curr = " + currIndex);
-        //System.out.println("tabs curr = " + mapTabs.getSelectedIndex());
-        //JPanelMap mapView = mapViews.get(currIndex);
-        //mapView.updateMapView(model.getCurrentMap());
-        //mapView.repaint();
-        for (int i = 0; i < model.getMaps().size(); ++i) {
-            JPanelMap map = mapViews.get(i);
-            map.updateMapView(model.getMaps().get(i));
-            map.repaint();
-        }
+        JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(currIndex);
+        mapView.updateMapView(model.getCurrentMap());
+        mapView.repaint();
     }
 
     public static Hashtable<String, ImageIcon> getTiles() {

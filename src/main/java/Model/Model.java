@@ -39,7 +39,6 @@ public class Model extends Observable {
     }
 
     public void addBackground(Type type) {
-        System.out.println("Background curr  = " + getCurrentIndex());
         getCurrentMap().addBackground(type);
 
         setChanged();
@@ -47,7 +46,6 @@ public class Model extends Observable {
     }
 
     public void addForeground(Type type) {
-        System.out.println("Foreground curr  = " + getCurrentIndex());
         getCurrentMap().addForeground(type);
 
         setChanged();

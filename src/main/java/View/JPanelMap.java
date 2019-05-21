@@ -17,7 +17,6 @@ public class JPanelMap extends JPanel{
 
     public JPanelMap(BorderLayout borderLayout) {
         super(borderLayout);
-        //tiles = new Hashtable<String, ImageIcon>();
         backgroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
     }
