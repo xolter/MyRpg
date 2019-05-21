@@ -36,9 +36,6 @@ public class UserInterface extends JFrame implements Observer {
         mapTabs.addChangeListener(this.controller);
         maps.add(mapTabs);
 
-        addMapView(); //force add map
-
-
         setJMenuBar(addMenubar());
         getContentPane().add(BorderLayout.NORTH, addToolbar());
         getContentPane().add(BorderLayout.WEST, addTilesButton());
@@ -125,8 +122,9 @@ public class UserInterface extends JFrame implements Observer {
         npc_tiles.setName("NPC");
         for (String imgname : npc_list)
         {
-            Image scale_img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname)).getImage();
-            scale_img = createImage(new FilteredImageSource(scale_img.getSource(), new CropImageFilter(16, 0, 32, 64)));
+            Image crop_img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname)).getImage();
+            crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(16, 0, 32, 56)));
+            Image scale_img = crop_img.getScaledInstance(16, 32, Image.SCALE_SMOOTH);
             ImageIcon img = new ImageIcon(scale_img);
             /*JLabel jlabelimg = new JLabel(img);
             jlabelimg.addMouseListener(controller);
@@ -138,15 +136,6 @@ public class UserInterface extends JFrame implements Observer {
 
         tiles.add(tabs);
         return tiles;
-    }
-
-    public static BufferedImage imageToBufferedImage(Image im) {
-        BufferedImage bufferedImage = new BufferedImage
-                (im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_RGB);
-        Graphics bg = bufferedImage.getGraphics();
-        bg.drawImage(im, 0, 0, null);
-        bg.dispose();
-        return bufferedImage;
     }
 
     public JMenuBar addMenubar()
@@ -171,9 +160,11 @@ public class UserInterface extends JFrame implements Observer {
         return toolbar;
     }
 
-    public JPanelMap addMapView()
+    public void addMapView()
     {
         Object[] map_options = get_mapoptions();
+        if ((Integer) map_options[3] == 0)
+            return;
         JPanelMap map = new JPanelMap((Integer)map_options[0] * JPanelMap.getTileSize(),
                                       (Integer)map_options[1] * JPanelMap.getTileSize());
         String mapName;
@@ -184,7 +175,6 @@ public class UserInterface extends JFrame implements Observer {
         map.setName(mapName);
         mapTabs.add(map);
         controller.actionAddMap(mapName, (Integer)map_options[0], (Integer)map_options[1]); //Create new map in database
-        return map;
     }
 
     public Object[] get_mapoptions()
@@ -199,7 +189,7 @@ public class UserInterface extends JFrame implements Observer {
         mapsize_pan.add(height);
         mapsize_pan.add(new JLabel("name:"));
         mapsize_pan.add(name);
-        Object[] options = new Object[3];
+        Object[] options = new Object[4];
         int result = JOptionPane.showConfirmDialog(null, mapsize_pan,
                 "Map Size", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
@@ -223,7 +213,10 @@ public class UserInterface extends JFrame implements Observer {
             options[0] = w;
             options[1] = h;
             options[2] = name.getText();
+            options[3] = 1;
         }
+        else
+            options[3] = 0;
         return options;
     }
 
@@ -240,10 +233,12 @@ public class UserInterface extends JFrame implements Observer {
         mapView.addForegroundTile(tiles.get("center.png"), 0, 16);*/
 
         Model model = (Model)observable;
-        int currIndex = model.getCurrentIndex();
-        JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(currIndex);
-        mapView.updateMapView(model.getCurrentMap());
-        mapView.repaint();
+        if (model.getCurrentMap() != null) {
+            int currIndex = model.getCurrentIndex();
+            JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(currIndex);
+            mapView.updateMapView(model.getCurrentMap());
+            mapView.repaint();
+        }
     }
 
     public static Hashtable<String, ImageIcon> getTiles() {

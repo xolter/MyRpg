@@ -12,6 +12,8 @@ public class Model extends Observable {
     }
 
     public Map getCurrentMap() {
+        if (maps.isEmpty())
+            return null;
         return maps.get(currentMap);
     }
 
