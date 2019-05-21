@@ -25,6 +25,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     public void mousePressed(MouseEvent mouseEvent)
     {
         pressed = mouseEvent;
+        System.out.println(pressed.getX());
     }
 
     @Override

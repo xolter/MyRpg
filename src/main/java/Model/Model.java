@@ -41,6 +41,7 @@ public class Model extends Observable {
     public void addBackground(Type type) {
         getCurrentMap().addBackground(type);
 
+
         setChanged();
         notifyObservers();
     }
