@@ -24,8 +24,7 @@ public class JPanelMap extends JPanel{
         this.height = height;
         backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            this.controller = controller;
-
+        this.controller = controller;
     }
 
     public void paintComponent(Graphics g) {
