@@ -11,17 +11,21 @@ import java.awt.image.BufferedImage;
 
 public class JPanelMap extends JPanel{
 
-    private final static int AREA_SIZE = 400;
+    private final int width;
+    private final int height;
     private final static int TILE_SIZE = 16;
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
     private Controller controller;
 
-    public JPanelMap(BorderLayout borderLayout, Controller controller) {
-        super(borderLayout);
-        backgroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
-        foregroundImage = new BufferedImage(AREA_SIZE, AREA_SIZE, BufferedImage.TYPE_INT_ARGB);
-        this.controller = controller;
+
+    public JPanelMap(int width, int height) {
+        this.width = width;
+        this.height = height;
+        backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            this.controller = controller;
+
     }
 
     public void paintComponent(Graphics g) {
@@ -34,7 +38,7 @@ public class JPanelMap extends JPanel{
             g.drawImage(foregroundImage, 0, 0, null);
         }
 
-        printGrid(this.getWidth(), this.getHeight(), g);
+        printGrid(width, height, g);
     }
 
     public void addBackgroundTile(ImageIcon im, int x, int y) {
@@ -89,5 +93,9 @@ public class JPanelMap extends JPanel{
             g.drawLine(i * TILE_SIZE, 0, i * TILE_SIZE, height);
         }
         g.dispose();
+    }
+
+    public static int getTileSize() {
+        return TILE_SIZE;
     }
 }

@@ -174,7 +174,8 @@ public class UserInterface extends JFrame implements Observer {
     public JPanelMap addMapView()
     {
         Object[] map_options = get_mapoptions();
-        JPanelMap map = new JPanelMap(new BorderLayout(), this.controller);
+        JPanelMap map = new JPanelMap((Integer)map_options[0] * JPanelMap.getTileSize(),
+                                      (Integer)map_options[1] * JPanelMap.getTileSize());
         String mapName;
         if (map_options[2].equals(""))
             mapName = "map" + (mapTabs.getTabCount() + 1);
