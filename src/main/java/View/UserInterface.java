@@ -97,9 +97,11 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : background_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
+            //mouse
             /*JLabel jlabelimg = new JLabel(img);
             jlabelimg.addMouseListener(controller);
             jlabelimg.addMouseMotionListener(controller);*/
+            //
             addButton(img, back_tiles, imgname);
 
         }
@@ -110,9 +112,11 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : foreground_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../foregroundObject/" + imgname));
+            //mouse
             /*JLabel jlabelimg = new JLabel(img);
             jlabelimg.addMouseListener(controller);
             jlabelimg.addMouseMotionListener(controller);*/
+            //
             addButton(img, fore_tiles, imgname);
         }
         tabs.add(fore_tiles);
@@ -125,11 +129,11 @@ public class UserInterface extends JFrame implements Observer {
             crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(16, 0, 32, 56)));
             Image scale_img = crop_img.getScaledInstance(16, 32, Image.SCALE_SMOOTH);
             ImageIcon img = new ImageIcon(scale_img);
+            //mouse
             /*JLabel jlabelimg = new JLabel(img);
             jlabelimg.addMouseListener(controller);
             jlabelimg.addMouseMotionListener(controller);*/
             addButton(img, npc_tiles, imgname);
-
         }
         tabs.add(npc_tiles);
 

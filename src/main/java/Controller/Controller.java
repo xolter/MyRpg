@@ -4,6 +4,7 @@ import Model.Map;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import Model.Model;
+import View.JPanelMap;
 import View.UserInterface;
 
 import javax.swing.*;
@@ -18,44 +19,49 @@ import static Model.Type.*;
 public class Controller extends MouseInputAdapter implements ActionListener, ChangeListener{
 
     private Model model;
-    Point location;
-    MouseEvent pressed;
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent)
-    {
-        pressed = mouseEvent;
-        System.out.println(pressed.getX());
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent)
-    {
-        Component component = mouseEvent.getComponent();
-        location = component.getLocation(location);
-        int x = location.x - pressed.getX() + mouseEvent.getX();
-        int y = location.y - pressed.getY() + mouseEvent.getY();
-        component.setLocation(x, y);
-        //component.repaint();
-    }
 
     public Controller(Model model) {
         this.model = model;
     }
 
+    //private Point location;
+    //private MouseEvent pressed;
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent)
+    {
+        //pressed = mouseEvent;
+        //JLabel jLabel = (JLabel)mouseEvent.getSource();
+        int x = mouseEvent.getX() / JPanelMap.getTileSize();
+        int y = mouseEvent.getY() / JPanelMap.getTileSize();
+        model.placeTile(x, y);
+        System.out.println("pressed x : " + x + " y : " + y);
+    }
+
+    /*@Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        super.mouseReleased(mouseEvent);
+        Component component = mouseEvent.getComponent();
+        location = component.getLocation(location);
+        int x = location.x + pressed.getX();
+        int y = location.y + pressed.getY();
+
+        System.out.println("released x : " + x + " y : " + y);
+    }*/
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String evt = actionEvent.getActionCommand();
         if (evt.equals("grass.png"))
-            model.addBackground(Grass);
+            model.setCurentTile(Grass, true);
         else if (evt.equals("sea.png"))
-            model.addBackground(Sea);
+            model.setCurentTile(Sea, true);
         else if (evt.equals("center.png"))
-            model.addForeground(Center);
+            model.setCurentTile(Center, false);
         else if (evt.equals("house.png"))
-            model.addForeground(House);
+            model.setCurentTile(House, false);
         else if (evt.equals("hero.png"))
-            model.addForeground(Hero);
+            model.setCurentTile(Hero, false);
         else
             System.exit(0);
     }

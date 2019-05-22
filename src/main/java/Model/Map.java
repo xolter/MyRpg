@@ -24,27 +24,27 @@ public class Map {
         }
     }
 
-    public void addBackground(Type type) {
-        tiles[0][0].setBackground(type);
-        tiles[0][0].setWalkable(true);
-        tiles[0][0].setEmpty(true);
-        tiles[0][0].setBegin(false);
+    public void addBackground(Type type, int x, int y) {
+        tiles[x][y].setBackground(type);
+        tiles[x][y].setWalkable(true);
+        tiles[x][y].setEmpty(true);
+        tiles[x][y].setBegin(false);
     }
 
-    public void addForeground(Type type) {
+    public void addForeground(Type type, int x, int y) {
         int w = type.getWidth();
         int h = type.getHeight();
         if (width < w || height < h)
             return;
         for (int i = 0; i < w; ++i) {
             for (int j = 0; j < h; ++j) {
-                tiles[i][j].setForeground(type);
-                tiles[i][j].setWalkable(false);
-                tiles[i][j].setEmpty(false);
-                tiles[i][j].setBegin(false);
+                tiles[x + i][y + j].setForeground(type);
+                tiles[x + i][y + j].setWalkable(false);
+                tiles[x + i][y + j].setEmpty(false);
+                tiles[x + i][y + j].setBegin(false);
             }
         }
-        tiles[0][0].setBegin(true);
+        tiles[x][y].setBegin(true);
     }
 
     public String getName() {

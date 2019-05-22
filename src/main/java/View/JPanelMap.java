@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Controller.DragAndDrop;
 import Model.Map;
 import Model.Tile;
 import Model.Type;
@@ -17,9 +18,11 @@ public class JPanelMap extends JPanel{
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
     private Controller controller;
+    //private DragAndDrop dragAndDrop;
+    //private JLabel imageLabel;
 
 
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paint(g);
         if (backgroundImage != null) {
@@ -30,7 +33,7 @@ public class JPanelMap extends JPanel{
         }
         printGrid(width, height, g);
 
-    }
+    }*/
 
     public JPanelMap(BorderLayout layout, int width, int height, Controller controller) {
         super(layout);
@@ -39,7 +42,8 @@ public class JPanelMap extends JPanel{
         backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         this.controller = controller;
-        if (height >= 63)
+
+        /*if (height >= 63)
         {
             JPanel newpanel = new JPanel();
             JScrollPane scrollPane = new JScrollPane(newpanel);
@@ -50,12 +54,20 @@ public class JPanelMap extends JPanel{
             //JPanel panel = new JPanel(null);
             //panel.setPreferredSize(new Dimension(500, 400));
             //this.add(scrollPane);
-        }
+        }*/
+
+        this.addMouseListener(this.controller);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //printGrid(width, height, g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, null);
+        }
+        if (foregroundImage != null) {
+            g.drawImage(foregroundImage, 0, 0, null);
+        }
+        printGrid(width, height, g);
     }
 
     public void addBackgroundTile(ImageIcon im, int x, int y) {
@@ -63,10 +75,10 @@ public class JPanelMap extends JPanel{
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
 
-        JLabel imglabel = new JLabel(im);
+        /*JLabel imglabel = new JLabel(im);
         imglabel.addMouseListener(this.controller);
         imglabel.addMouseMotionListener(this.controller);
-        this.add(imglabel);
+        this.add(imglabel);*/
     }
 
     public void addForegroundTile(ImageIcon im, int x, int y) {
@@ -74,10 +86,10 @@ public class JPanelMap extends JPanel{
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
 
-        JLabel imglabel = new JLabel(im);
+        /*JLabel imglabel = new JLabel(im);
         imglabel.addMouseListener(this.controller);
         imglabel.addMouseMotionListener(this.controller);
-        this.add(imglabel);
+        this.add(imglabel);*/
     }
 
     public void updateMapView(Map map) {

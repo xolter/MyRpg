@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 public class Model extends Observable {
-    int currentMap;
-    ArrayList<Map> maps;
+    private int currentMap;
+    private boolean curTileIsBackground;
+    private Type curentTile;
+    private ArrayList<Map> maps;
 
     public Model() {
         maps = new ArrayList<Map>();
@@ -50,7 +52,9 @@ public class Model extends Observable {
         notifyObservers();
     }
 
-    public void addBackground(Type type) {
+
+    /*public void addBackground(Type type) {
+
         if (getCurrentMap() != null) {
             getCurrentMap().addBackground(type);
             setChanged();
@@ -64,5 +68,23 @@ public class Model extends Observable {
             setChanged();
             notifyObservers();
         }
+    }*/
+
+    public void placeTile(int x, int y) {
+        if (getCurrentMap() != null) {
+            if (curTileIsBackground) {
+                getCurrentMap().addBackground(curentTile, x, y);
+            }
+            else {
+                getCurrentMap().addForeground(curentTile, x, y);
+            }
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    public void setCurentTile(Type type, boolean isBackground) {
+        this.curentTile = type;
+        this.curTileIsBackground = isBackground;
     }
 }
