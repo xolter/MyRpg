@@ -11,7 +11,6 @@ import java.util.Observer;
 
 public class Main {
     public static void main(String[] args) {
-        //Map map = new Map("world", 100, 100);
         Model model = new Model();
         Controller controller = new Controller(model);
         UserInterface userInterface = new UserInterface("MyRpgMaker", controller);

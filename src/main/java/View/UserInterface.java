@@ -225,8 +225,8 @@ public class UserInterface extends JFrame implements Observer {
         int result = JOptionPane.showConfirmDialog(null, mapsize_pan,
                 "Map Size", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            int w = 100;
-            int h = 100;
+            int w = 75;
+            int h = 50;
             if (!width.getText().equals("") && width.getText().matches("\\d+")) {
                 w = Integer.parseInt(width.getText());
                 if (w > 800)
