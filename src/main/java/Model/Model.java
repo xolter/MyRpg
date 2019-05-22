@@ -40,6 +40,16 @@ public class Model extends Observable {
         notifyObservers();
     }
 
+    public void delMap(int index)
+    {
+        maps.get(currentMap).initTiles();
+        //maybe try to updateMapView ?
+        maps.remove(index);
+
+        setChanged();
+        notifyObservers();
+    }
+
     public void addBackground(Type type) {
         if (getCurrentMap() != null) {
             getCurrentMap().addBackground(type);

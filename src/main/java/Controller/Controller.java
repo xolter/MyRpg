@@ -69,4 +69,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     public void actionAddMap(String name, int width, int height) {
         model.addMap(name, width, height);
     }
+    public void actionDelMap(int index) {
+        model.delMap(index);
+    }
 }

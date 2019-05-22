@@ -1,12 +1,11 @@
 package View;
 
 import Controller.Controller;
-import Controller.NewMapOptionPane;
+import Controller.MapOptionPane;
 import Model.Model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
@@ -160,9 +159,15 @@ public class UserInterface extends JFrame implements Observer {
     {
         JToolBar toolbar = new JToolBar();
         JButton newMap = new JButton("New map");
-        newMap.addActionListener(new NewMapOptionPane(this));
+        newMap.setActionCommand("New map");
+        newMap.addActionListener(new MapOptionPane(this));
         toolbar.add(newMap);
-        toolbar.add(new JButton("Tool2"));
+
+        JButton delMap = new JButton("Delete Map");
+        delMap.setActionCommand("Delete map");
+        delMap.addActionListener(new MapOptionPane(this));
+        toolbar.add(delMap);
+
         return toolbar;
     }
 
@@ -184,6 +189,15 @@ public class UserInterface extends JFrame implements Observer {
         map.setName(mapName);
         mapTabs.add(map);
         controller.actionAddMap(mapName, (Integer)map_options[0], (Integer)map_options[1]); //Create new map in database
+    }
+
+    public void delMapView()
+    {
+        if (mapTabs.getTabCount() > 1) {
+            int index = mapTabs.getSelectedIndex();
+            mapTabs.remove(index);
+            controller.actionDelMap(index);
+        }
     }
 
     public Object[] get_mapoptions()
