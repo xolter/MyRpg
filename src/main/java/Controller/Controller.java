@@ -1,15 +1,12 @@
 package Controller;
 
-import Model.Map;
 import javax.swing.event.MouseInputAdapter;
-import java.awt.*;
 import Model.Model;
 import View.JPanelMap;
-import View.UserInterface;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,35 +16,21 @@ import static Model.Type.*;
 public class Controller extends MouseInputAdapter implements ActionListener, ChangeListener{
 
     private Model model;
+    private Point location;
+    private MouseEvent pressed;
 
     public Controller(Model model) {
         this.model = model;
     }
 
-    //private Point location;
-    //private MouseEvent pressed;
-
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-        //pressed = mouseEvent;
-        //JLabel jLabel = (JLabel)mouseEvent.getSource();
         int x = mouseEvent.getX() / JPanelMap.getTileSize();
         int y = mouseEvent.getY() / JPanelMap.getTileSize();
         model.placeTile(x, y);
-        System.out.println("pressed x : " + x + " y : " + y);
+        //System.out.println("pressed x : " + x + " y : " + y);
     }
-
-    /*@Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        super.mouseReleased(mouseEvent);
-        Component component = mouseEvent.getComponent();
-        location = component.getLocation(location);
-        int x = location.x + pressed.getX();
-        int y = location.y + pressed.getY();
-
-        System.out.println("released x : " + x + " y : " + y);
-    }*/
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

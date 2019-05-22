@@ -52,26 +52,8 @@ public class Model extends Observable {
         notifyObservers();
     }
 
-
-    /*public void addBackground(Type type) {
-
-        if (getCurrentMap() != null) {
-            getCurrentMap().addBackground(type);
-            setChanged();
-            notifyObservers();
-        }
-    }
-
-    public void addForeground(Type type) {
-        if (getCurrentMap() != null) {
-            getCurrentMap().addForeground(type);
-            setChanged();
-            notifyObservers();
-        }
-    }*/
-
     public void placeTile(int x, int y) {
-        if (getCurrentMap() != null) {
+        if (getCurrentMap() != null && curentTile != null) {
             if (curTileIsBackground) {
                 getCurrentMap().addBackground(curentTile, x, y);
             }

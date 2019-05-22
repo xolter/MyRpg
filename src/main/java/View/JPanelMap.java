@@ -1,7 +1,6 @@
 package View;
 
 import Controller.Controller;
-import Controller.DragAndDrop;
 import Model.Map;
 import Model.Tile;
 import Model.Type;
@@ -18,8 +17,6 @@ public class JPanelMap extends JPanel{
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
     private Controller controller;
-    //private DragAndDrop dragAndDrop;
-    //private JLabel imageLabel;
 
 
     /*@Override
@@ -74,22 +71,12 @@ public class JPanelMap extends JPanel{
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
-
-        /*JLabel imglabel = new JLabel(im);
-        imglabel.addMouseListener(this.controller);
-        imglabel.addMouseMotionListener(this.controller);
-        this.add(imglabel);*/
     }
 
     public void addForegroundTile(ImageIcon im, int x, int y) {
         Graphics g = backgroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
-
-        /*JLabel imglabel = new JLabel(im);
-        imglabel.addMouseListener(this.controller);
-        imglabel.addMouseMotionListener(this.controller);
-        this.add(imglabel);*/
     }
 
     public void updateMapView(Map map) {

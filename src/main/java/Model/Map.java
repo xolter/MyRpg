@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Observable;
-
 public class Map {
     private String name;
     private int width;

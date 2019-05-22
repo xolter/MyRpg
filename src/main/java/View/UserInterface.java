@@ -28,8 +28,6 @@ public class UserInterface extends JFrame implements Observer {
         setVisible(true);
 
         JPanel maps = new JPanel(new BorderLayout());
-        //maps.addMouseListener(controller);
-        //maps.addMouseMotionListener(controller);
 
         mapTabs = new JTabbedPane();
         mapTabs.addChangeListener(this.controller);
@@ -97,11 +95,6 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : background_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../backgroundTile/" + imgname));
-            //mouse
-            /*JLabel jlabelimg = new JLabel(img);
-            jlabelimg.addMouseListener(controller);
-            jlabelimg.addMouseMotionListener(controller);*/
-            //
             addButton(img, back_tiles, imgname);
 
         }
@@ -112,11 +105,6 @@ public class UserInterface extends JFrame implements Observer {
         for (String imgname : foreground_list)
         {
             ImageIcon img = new ImageIcon(UserInterface.class.getResource("../foregroundObject/" + imgname));
-            //mouse
-            /*JLabel jlabelimg = new JLabel(img);
-            jlabelimg.addMouseListener(controller);
-            jlabelimg.addMouseMotionListener(controller);*/
-            //
             addButton(img, fore_tiles, imgname);
         }
         tabs.add(fore_tiles);
@@ -129,10 +117,6 @@ public class UserInterface extends JFrame implements Observer {
             crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(16, 0, 32, 56)));
             Image scale_img = crop_img.getScaledInstance(16, 32, Image.SCALE_SMOOTH);
             ImageIcon img = new ImageIcon(scale_img);
-            //mouse
-            /*JLabel jlabelimg = new JLabel(img);
-            jlabelimg.addMouseListener(controller);
-            jlabelimg.addMouseMotionListener(controller);*/
             addButton(img, npc_tiles, imgname);
         }
         tabs.add(npc_tiles);
@@ -248,17 +232,6 @@ public class UserInterface extends JFrame implements Observer {
     }
 
     public void update(Observable observable, Object o) {
-        /*mapView.addBackgroundTile(tiles.get("grass.png"), 0, 0);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 0, 16);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 0, 32);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 16, 0);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 16, 16);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 16, 32);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 32, 0);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 32, 16);
-        mapView.addBackgroundTile(tiles.get("grass.png"), 32, 32);
-        mapView.addForegroundTile(tiles.get("center.png"), 0, 16);*/
-
         Model model = (Model)observable;
         if (model.getCurrentMap() != null) {
             int currIndex = model.getCurrentIndex();
