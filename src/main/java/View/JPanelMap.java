@@ -22,6 +22,12 @@ public class JPanelMap extends JPanel{
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, null);
+        }
+        if (foregroundImage != null) {
+            g.drawImage(foregroundImage, 0, 0, null);
+        }
         printGrid(width, height, g);
 
     }
@@ -49,14 +55,6 @@ public class JPanelMap extends JPanel{
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, null);
-        }
-        if (foregroundImage != null) {
-            g.drawImage(foregroundImage, 0, 0, null);
-        }
-
         //printGrid(width, height, g);
     }
 
