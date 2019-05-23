@@ -17,6 +17,8 @@ public class MapOptionPane extends AbstractAction {
         String evt = actionEvent.getActionCommand();
         if (evt.equals("Delete map"))
             userInterface.delMapView();
+        else if (evt.equals("Reset map"))
+            userInterface.resetMapView();
         else if (evt.equals("New map"))
             userInterface.addMapView();
         else if (evt.equals("Display grid"))

@@ -3,6 +3,7 @@ package Controller;
 import javax.swing.event.MouseInputAdapter;
 import Model.Model;
 import View.JPanelMap;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -72,7 +73,10 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     public void actionAddMap(String name, int width, int height) {
         model.addMap(name, width, height);
     }
-    public void actionDelMap(int index) {
-        model.delMap(index);
+    public void actionDelMap() {
+        model.delMap();
+    }
+    public void actionResetMap() {
+        model.resetMap();
     }
 }

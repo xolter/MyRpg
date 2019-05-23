@@ -127,6 +127,12 @@ public class JPanelMap extends JPanel{
 
     }
 
+    public void clearMap()
+    {
+        backgroundImage = null;
+        foregroundImage = null;
+    }
+
     public static int getTileSize() {
         return TILE_SIZE;
     }

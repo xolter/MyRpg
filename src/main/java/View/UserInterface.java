@@ -172,10 +172,16 @@ public class UserInterface extends JFrame implements Observer {
         delMap.addActionListener(new MapOptionPane(this));
         toolbar.add(delMap);
 
+        JButton resetMap = new JButton("Reset Map");
+        resetMap.setActionCommand("Reset map");
+        resetMap.addActionListener(new MapOptionPane(this));
+        toolbar.add(resetMap);
+
         JButton displayGrid = new JButton("Grid");
         displayGrid.setActionCommand("Display grid");
         displayGrid.addActionListener(new MapOptionPane(this));
         toolbar.add(displayGrid);
+
         return toolbar;
     }
 
@@ -203,10 +209,20 @@ public class UserInterface extends JFrame implements Observer {
     public void delMapView()
     {
         if (mapTabs.getTabCount() > 1) {
+            resetMapView();
             int index = mapTabs.getSelectedIndex();
             mapTabs.remove(index);
-            controller.actionDelMap(index);
+            controller.actionDelMap();
         }
+    }
+
+    public void resetMapView()
+    {
+        int curr = mapTabs.getSelectedIndex();
+        JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(curr);
+        mapView.clearMap();
+        mapView.repaint();
+        controller.actionResetMap();
     }
 
     public Object[] get_mapoptions()

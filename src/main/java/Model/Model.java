@@ -42,12 +42,17 @@ public class Model extends Observable {
         notifyObservers();
     }
 
-    public void delMap(int index)
+    public void resetMap()
     {
         maps.get(currentMap).initTiles();
-        //maybe try to updateMapView ?
-        maps.remove(index);
+        setChanged();
+        notifyObservers();
+    }
 
+    public void delMap()
+    {
+        resetMap();
+        maps.remove(currentMap);
         setChanged();
         notifyObservers();
     }
