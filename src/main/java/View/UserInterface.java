@@ -161,23 +161,27 @@ public class UserInterface extends JFrame implements Observer {
 
     public JToolBar addToolbar()
     {
+        ImageIcon newimg = new ImageIcon(UserInterface.class.getResource("../icon/new_map_icon.png"));
         JToolBar toolbar = new JToolBar();
-        JButton newMap = new JButton("New map");
+        JButton newMap = new JButton(newimg);
         newMap.setActionCommand("New map");
         newMap.addActionListener(new MapOptionPane(this));
         toolbar.add(newMap);
 
-        JButton delMap = new JButton("Delete Map");
+        ImageIcon delimg = new ImageIcon(UserInterface.class.getResource("../icon/delete_map_icon.png"));
+        JButton delMap = new JButton(delimg);
         delMap.setActionCommand("Delete map");
         delMap.addActionListener(new MapOptionPane(this));
         toolbar.add(delMap);
 
-        JButton resetMap = new JButton("Reset Map");
+        ImageIcon resetimg = new ImageIcon(UserInterface.class.getResource("../icon/reset_map_icon.png"));
+        JButton resetMap = new JButton(resetimg);
         resetMap.setActionCommand("Reset map");
         resetMap.addActionListener(new MapOptionPane(this));
         toolbar.add(resetMap);
 
-        JButton displayGrid = new JButton("Grid");
+        ImageIcon gridicon = new ImageIcon(UserInterface.class.getResource("../icon/grid_icon.png"));
+        JButton displayGrid = new JButton(gridicon);
         displayGrid.setActionCommand("Display grid");
         displayGrid.addActionListener(new MapOptionPane(this));
         toolbar.add(displayGrid);
