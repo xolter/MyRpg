@@ -114,16 +114,31 @@ public class UserInterface extends JFrame implements Observer {
         npc_tiles.setName("NPC");
         for (String imgname : npc_list)
         {
-            Image crop_img = new ImageIcon(UserInterface.class.getResource("../npc/" + imgname)).getImage();
-            crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(16, 0, 32, 56)));
-            Image scale_img = crop_img.getScaledInstance(16, 32, Image.SCALE_SMOOTH);
-            ImageIcon img = new ImageIcon(scale_img);
+
+            ImageIcon img = cropImage(imgname);
             addButton(img, npc_tiles, imgname);
         }
         tabs.add(npc_tiles);
 
         tiles.add(tabs);
         return tiles;
+    }
+
+    public ImageIcon cropImage(String name) {
+        if (name.equals("hero.png")) {
+            Image crop_img = new ImageIcon(UserInterface.class.getResource("../npc/" + name)).getImage();
+            crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(16, 0, 32, 56)));
+            Image scale_img = crop_img.getScaledInstance(16, 32, Image.SCALE_SMOOTH);
+            ImageIcon img = new ImageIcon(scale_img);
+            return img;
+        }
+        else {
+            Image crop_img = new ImageIcon(UserInterface.class.getResource("../npc/" + name)).getImage();
+            crop_img = createImage(new FilteredImageSource(crop_img.getSource(), new CropImageFilter(10, 0, 100, 115)));
+            Image scale_img = crop_img.getScaledInstance(22, 32, Image.SCALE_SMOOTH);
+            ImageIcon img = new ImageIcon(scale_img);
+            return img;
+        }
     }
 
     public JMenuBar addMenubar()

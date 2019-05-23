@@ -67,6 +67,10 @@ public class JPanelMap extends JPanel{
         }
         if (userInterface.getDisplayGrid())
             printGrid(width, height, g);
+
+        g.drawLine(width, 0, width, height);
+        g.drawLine(0, height, width, height);
+
     }
 
     public void addBackgroundTile(ImageIcon im, int x, int y) {
