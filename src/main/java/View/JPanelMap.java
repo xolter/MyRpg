@@ -105,7 +105,6 @@ public class JPanelMap extends JPanel{
 
     public void printGrid(int width, int height, Graphics g)
     {
-
         int i;
         for (i = 0; i * TILE_SIZE < height; i++)
         {
@@ -123,14 +122,12 @@ public class JPanelMap extends JPanel{
 
         g.drawLine(i * TILE_SIZE,0, i * TILE_SIZE, height);
         g.dispose();
-
-
     }
 
     public void clearMap()
     {
-        backgroundImage = null;
-        foregroundImage = null;
+        backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
     public static int getTileSize() {
