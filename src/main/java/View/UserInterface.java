@@ -15,13 +15,14 @@ public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
     private JTabbedPane mapTabs;
+    private static boolean displayGrid;
     private static Hashtable<String, ImageIcon> tiles;
 
     public UserInterface(String title, Controller controller) {
         super(title);
 
         this.controller = controller;
-
+        displayGrid = false;
         this.tiles = new Hashtable<String, ImageIcon>();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,6 +157,10 @@ public class UserInterface extends JFrame implements Observer {
         delMap.addActionListener(new MapOptionPane(this));
         toolbar.add(delMap);
 
+        JButton displayGrid = new JButton("Grid");
+        displayGrid.setActionCommand("Display grid");
+        displayGrid.addActionListener(new MapOptionPane(this));
+        toolbar.add(displayGrid);
         return toolbar;
     }
 
@@ -167,7 +172,8 @@ public class UserInterface extends JFrame implements Observer {
             return;
 
         JPanelMap map = new JPanelMap(new BorderLayout(), (Integer)map_options[0] * JPanelMap.getTileSize(),
-                                      (Integer)map_options[1] * JPanelMap.getTileSize(), this.controller);
+                                      (Integer)map_options[1] * JPanelMap.getTileSize(),
+                                      this.controller, this);
 
         String mapName;
         if (map_options[2].equals(""))
@@ -231,6 +237,13 @@ public class UserInterface extends JFrame implements Observer {
         return options;
     }
 
+    public void switchGrid() {
+        displayGrid = !displayGrid;
+        int curr = mapTabs.getSelectedIndex();
+        JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(curr);
+        mapView.repaint();
+    }
+
     public void update(Observable observable, Object o) {
         Model model = (Model)observable;
         if (model.getCurrentMap() != null) {
@@ -243,5 +256,8 @@ public class UserInterface extends JFrame implements Observer {
 
     public static Hashtable<String, ImageIcon> getTiles() {
         return tiles;
+    }
+    public boolean getDisplayGrid() {
+        return displayGrid;
     }
 }

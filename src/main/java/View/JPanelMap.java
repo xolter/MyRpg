@@ -17,7 +17,7 @@ public class JPanelMap extends JPanel{
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
     private Controller controller;
-
+    private UserInterface userInterface;
 
     /*@Override
     public void paint(Graphics g) {
@@ -32,14 +32,14 @@ public class JPanelMap extends JPanel{
 
     }*/
 
-    public JPanelMap(BorderLayout layout, int width, int height, Controller controller) {
+    public JPanelMap(BorderLayout layout, int width, int height, Controller controller, UserInterface userInterface) {
         super(layout);
         this.width = width;
         this.height = height;
         backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         this.controller = controller;
-
+        this.userInterface = userInterface;
         /*if (height >= 63)
         {
             JPanel newpanel = new JPanel();
@@ -65,7 +65,8 @@ public class JPanelMap extends JPanel{
         if (foregroundImage != null) {
             g.drawImage(foregroundImage, 0, 0, null);
         }
-        printGrid(width, height, g);
+        if (userInterface.getDisplayGrid())
+            printGrid(width, height, g);
     }
 
     public void addBackgroundTile(ImageIcon im, int x, int y) {
