@@ -32,7 +32,7 @@ public class Map {
     public void addForeground(Type type, int x, int y) {
         int w = type.getWidth();
         int h = type.getHeight();
-        if (width < w || height < h)
+        if (width < x + w || height < y + h)
             return;
         for (int i = 0; i < w; ++i) {
             for (int j = 0; j < h; ++j) {

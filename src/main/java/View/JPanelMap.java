@@ -54,6 +54,7 @@ public class JPanelMap extends JPanel{
         }*/
 
         this.addMouseListener(this.controller);
+        this.addMouseMotionListener(this.controller);
     }
 
     public void paintComponent(Graphics g) {
@@ -74,7 +75,7 @@ public class JPanelMap extends JPanel{
     }
 
     public void addForegroundTile(ImageIcon im, int x, int y) {
-        Graphics g = backgroundImage.getGraphics();
+        Graphics g = foregroundImage.getGraphics();
         g.drawImage(im.getImage(), x, y, null);
         g.dispose();
     }

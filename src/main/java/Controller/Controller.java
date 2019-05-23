@@ -26,10 +26,22 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
+
         int x = mouseEvent.getX() / JPanelMap.getTileSize();
         int y = mouseEvent.getY() / JPanelMap.getTileSize();
-        model.placeTile(x, y);
+        if (x >= 0 && y >= 0 && x < model.getCurrentMap().getWidth() && y < model.getCurrentMap().getHeight())
+            model.placeTile(x, y);
         //System.out.println("pressed x : " + x + " y : " + y);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent)
+    {
+        int x = mouseEvent.getX() / JPanelMap.getTileSize();
+        int y = mouseEvent.getY() / JPanelMap.getTileSize();
+        if (x >= 0 && y >= 0 && x < model.getCurrentMap().getWidth() && y < model.getCurrentMap().getHeight())
+            model.placeTile(x, y);
+        //System.out.println("dragged x : " + x + " y : " + y);
     }
 
     @Override

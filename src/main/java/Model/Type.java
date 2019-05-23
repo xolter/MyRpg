@@ -7,9 +7,9 @@ public enum Type {
     House("house.png", 3, 4),
     Hero("hero.png", 1, 2);
 
-    String name;
-    int width;
-    int height;
+    private String name;
+    private int width;
+    private int height;
 
     Type(String name, int width, int height) {
         this.name = name;
