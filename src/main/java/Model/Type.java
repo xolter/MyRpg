@@ -7,7 +7,8 @@ public enum Type {
     House("house.png", 3, 4),
     Hero("hero.png", 1, 2),
     Blue("bluehair.png", 1,2),
-    Sand("sand.png", 1, 1);
+    Sand("sand.png", 1, 1),
+    Brick("brick.png", 1, 1);
 
     private String name;
     private int width;

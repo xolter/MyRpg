@@ -62,6 +62,8 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
             model.setCurentTile(Blue, false);
         else if (evt.equals("sand.png"))
             model.setCurentTile(Sand, true);
+        else if (evt.equals("brick.png"))
+            model.setCurentTile(Brick, true);
         else
             System.exit(0);
     }
