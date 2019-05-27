@@ -159,37 +159,26 @@ public class UserInterface extends JFrame implements Observer {
         return menubar;
     }
 
+    public JButton addToolbarButton(String imagePath, String tip, String command) {
+        ImageIcon img = new ImageIcon(UserInterface.class.getResource(imagePath));
+        JButton button = new JButton(img);
+        button.setToolTipText(tip);
+        button.setActionCommand(command);
+        button.addActionListener(new MapOptionPane(this));
+        return button;
+    }
+
     public JToolBar addToolbar()
     {
-        ImageIcon newimg = new ImageIcon(UserInterface.class.getResource("../icon/new_map_icon.png"));
         JToolBar toolbar = new JToolBar();
-        JButton newMap = new JButton(newimg);
-        newMap.setToolTipText("Create a new map...");
-        newMap.setActionCommand("New map");
-        newMap.addActionListener(new MapOptionPane(this));
+        JButton newMap = addToolbarButton("../icon/new_map_icon.png", "Create a new map...", "New map");
+        JButton delMap = addToolbarButton("../icon/delete_map_icon.png", "Delete current map", "Delete map");
+        JButton resetMap = addToolbarButton("../icon/reset_map_icon.png", "Reset current map's tiles", "Reset map");
+        JButton displayGrid = addToolbarButton("../icon/grid_icon.png", "Display/hide the grid", "Display grid");
         toolbar.add(newMap);
-
-        ImageIcon delimg = new ImageIcon(UserInterface.class.getResource("../icon/delete_map_icon.png"));
-        JButton delMap = new JButton(delimg);
-        delMap.setToolTipText("Delete current map");
-        delMap.setActionCommand("Delete map");
-        delMap.addActionListener(new MapOptionPane(this));
         toolbar.add(delMap);
-
-        ImageIcon resetimg = new ImageIcon(UserInterface.class.getResource("../icon/reset_map_icon.png"));
-        JButton resetMap = new JButton(resetimg);
-        resetMap.setToolTipText("Reset current map's tiles");
-        resetMap.setActionCommand("Reset map");
-        resetMap.addActionListener(new MapOptionPane(this));
         toolbar.add(resetMap);
-
-        ImageIcon gridicon = new ImageIcon(UserInterface.class.getResource("../icon/grid_icon.png"));
-        JButton displayGrid = new JButton(gridicon);
-        displayGrid.setToolTipText("Display/hide the grid");
-        displayGrid.setActionCommand("Display grid");
-        displayGrid.addActionListener(new MapOptionPane(this));
         toolbar.add(displayGrid);
-
         return toolbar;
     }
 
