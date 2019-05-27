@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 
 public class MapOptionPane extends AbstractAction {
     UserInterface userInterface;
+    Controller controller;
 
-    public MapOptionPane(UserInterface userInterface) {
+    public MapOptionPane(UserInterface userInterface, Controller controller) {
         this.userInterface = userInterface;
+        this.controller = controller;
     }
 
     @Override
@@ -23,5 +25,7 @@ public class MapOptionPane extends AbstractAction {
             userInterface.addMapView();
         else if (evt.equals("Display grid"))
             userInterface.switchGrid();
+        else if (evt.equals("Selection mode"))
+            controller.switchSelectionMode();
     }
 }

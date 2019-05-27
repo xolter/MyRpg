@@ -15,7 +15,7 @@ public class UserInterface extends JFrame implements Observer {
 
     private Controller controller;
     private JTabbedPane mapTabs;
-    private static boolean displayGrid;
+    private boolean displayGrid;
     private static Hashtable<String, ImageIcon> tiles;
 
     public UserInterface(String title, Controller controller) {
@@ -164,7 +164,7 @@ public class UserInterface extends JFrame implements Observer {
         JButton button = new JButton(img);
         button.setToolTipText(tip);
         button.setActionCommand(command);
-        button.addActionListener(new MapOptionPane(this));
+        button.addActionListener(new MapOptionPane(this, controller));
         return button;
     }
 
@@ -175,10 +175,12 @@ public class UserInterface extends JFrame implements Observer {
         JButton delMap = addToolbarButton("../icon/delete_map_icon.png", "Delete current map", "Delete map");
         JButton resetMap = addToolbarButton("../icon/reset_map_icon.png", "Reset current map's tiles", "Reset map");
         JButton displayGrid = addToolbarButton("../icon/grid_icon.png", "Display/hide the grid", "Display grid");
+        JButton selectMode = addToolbarButton("../icon/grid_icon.png", "Activate/Desactivate seleciton mode", "Selection mode");
         toolbar.add(newMap);
         toolbar.add(delMap);
         toolbar.add(resetMap);
         toolbar.add(displayGrid);
+        toolbar.add(selectMode);
         return toolbar;
     }
 
@@ -277,6 +279,7 @@ public class UserInterface extends JFrame implements Observer {
         if (model.getCurrentMap() != null) {
             int currIndex = model.getCurrentIndex();
             JPanelMap mapView = (JPanelMap) mapTabs.getComponentAt(currIndex);
+            mapView.clearMap();
             mapView.updateMapView(model.getCurrentMap());
             mapView.repaint();
         }

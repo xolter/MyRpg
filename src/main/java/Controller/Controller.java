@@ -17,32 +17,42 @@ import static Model.Type.*;
 public class Controller extends MouseInputAdapter implements ActionListener, ChangeListener{
 
     private Model model;
+    private boolean selectionMode;
     private Point location;
     private MouseEvent pressed;
 
     public Controller(Model model) {
         this.model = model;
+        this.selectionMode = false;
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-
-        int x = mouseEvent.getX() / JPanelMap.getTileSize();
-        int y = mouseEvent.getY() / JPanelMap.getTileSize();
-        if (x >= 0 && y >= 0 && x < model.getCurrentMap().getWidth() && y < model.getCurrentMap().getHeight())
-            model.placeTile(x, y);
+        if (!selectionMode)
+            addAndRemove(mouseEvent);
         //System.out.println("pressed x : " + x + " y : " + y);
     }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
     {
+        if (!selectionMode)
+            addAndRemove(mouseEvent);
+        //System.out.println("dragged x : " + x + " y : " + y);
+    }
+
+    public void addAndRemove(MouseEvent mouseEvent) {
         int x = mouseEvent.getX() / JPanelMap.getTileSize();
         int y = mouseEvent.getY() / JPanelMap.getTileSize();
-        if (x >= 0 && y >= 0 && x < model.getCurrentMap().getWidth() && y < model.getCurrentMap().getHeight())
+        if (x < 0 || y < 0 || x >= model.getCurrentMap().getWidth() || y >= model.getCurrentMap().getHeight())
+            return;
+        if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
             model.placeTile(x, y);
-        //System.out.println("dragged x : " + x + " y : " + y);
+        }
+        else {
+            model.removeTile(x, y);
+        }
     }
 
     @Override
@@ -82,5 +92,9 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     }
     public void actionResetMap() {
         model.resetMap();
+    }
+
+    public void switchSelectionMode() {
+        selectionMode = !selectionMode;
     }
 }

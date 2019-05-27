@@ -24,9 +24,6 @@ public class Map {
 
     public void addBackground(Type type, int x, int y) {
         tiles[x][y].setBackground(type);
-        //tiles[x][y].setWalkable(true);
-        //tiles[x][y].setEmpty(true);
-        //tiles[x][y].setBegin(false);
     }
 
     public boolean isNotEmpty(int x, int y, int w, int h) {
@@ -53,6 +50,25 @@ public class Map {
             }
         }
         tiles[x][y].setBegin(true);
+    }
+
+    public void deleteForeground(int x, int y) {
+        Type type = tiles[x][y].getForeground();
+        int w = type.getWidth();
+        int h = type.getHeight();
+        for (int i = 0; i < w; ++i) {
+            for (int j = 0; j < h; ++j) {
+                tiles[x + i][y + j].setForeground(null);
+                tiles[x + i][y + j].setWalkable(true);
+                tiles[x + i][y + j].setEmpty(true);
+            }
+        }
+        tiles[x][y].setBegin(false);
+
+    }
+
+    public void deleteBackground(int x, int y) {
+        tiles[x][y].setBackground(null);
     }
 
     public String getName() {

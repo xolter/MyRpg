@@ -70,6 +70,21 @@ public class Model extends Observable {
         }
     }
 
+    public void removeTile(int x, int y) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            Tile[][] tiles = map.getTiles();
+            if (tiles[x][y].getForeground() != null) {
+                map.deleteForeground(x, y);
+            }
+            else if(tiles[x][y].getBackground() != null) {
+                map.deleteBackground(x, y);
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     public void setCurentTile(Type type, boolean isBackground) {
         this.curentTile = type;
         this.curTileIsBackground = isBackground;
