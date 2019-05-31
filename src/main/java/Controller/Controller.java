@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import static Model.Type.*;
 
@@ -74,6 +75,13 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
             model.setCurentTile(Sand, true);
         else if (evt.equals("brick.png"))
             model.setCurentTile(Brick, true);
+        else if (evt.equals("Save")) {
+            try {
+                model.ToWorldFile("test");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         else
             System.exit(0);
     }

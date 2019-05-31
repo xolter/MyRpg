@@ -146,9 +146,12 @@ public class UserInterface extends JFrame implements Observer {
         JMenuBar menubar = new JMenuBar();
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
-        JMenuItem save = new JMenuItem("Save");
-        JMenuItem quit = new JMenuItem("Quit");
 
+        JMenuItem save = new JMenuItem("Save");
+        save.setActionCommand("Save");
+        save.addActionListener(controller);
+
+        JMenuItem quit = new JMenuItem("Quit");
         quit.setActionCommand("Quit");
         quit.addActionListener(controller);
 

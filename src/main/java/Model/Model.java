@@ -1,5 +1,8 @@
 package Model;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -88,5 +91,40 @@ public class Model extends Observable {
     public void setCurentTile(Type type, boolean isBackground) {
         this.curentTile = type;
         this.curTileIsBackground = isBackground;
+    }
+
+    public void ToWorldFile(String filename) throws IOException {
+        FileWriter worldfile = new FileWriter(filename + ".wrld");
+        PrintWriter printer = new PrintWriter(worldfile);
+        for (Map map : maps)
+        {
+            Tile[][] tiles = map.getTiles();
+            printer.println(map.getName() + " " + map.getWidth() + " " + map.getHeight());
+            printer.println("{");
+            for (int i = 0; i < map.getWidth(); i++)
+            {
+                for (int j = 0; j < map.getHeight(); j++)
+                {
+                    Type backtile = tiles[i][j].getBackground();
+                    if (backtile != null)
+                    {
+                        printer.println("   " + "background x=" + j + " y=" + i);
+                        printer.println("   " + backtile.getName() + " " + backtile.getWidth() + " " + backtile.getHeight());
+                        printer.println();
+                    }
+
+                    Type foretile = tiles[i][j].getForeground();
+                    if (foretile != null)
+                    {
+                        printer.println("   " + "foreground x=" + j + " y=" + i);
+                        printer.println("   " + foretile.getName() + " " + foretile.getWidth() + " " + foretile.getHeight());
+                        printer.println();
+                    }
+                }
+            }
+            printer.println("}");
+            printer.println();
+        }
+        printer.close();
     }
 }
