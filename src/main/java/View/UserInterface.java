@@ -175,7 +175,7 @@ public class UserInterface extends JFrame implements Observer {
         JButton delMap = addToolbarButton("../icon/delete_map_icon.png", "Delete current map", "Delete map");
         JButton resetMap = addToolbarButton("../icon/reset_map_icon.png", "Reset current map's tiles", "Reset map");
         JButton displayGrid = addToolbarButton("../icon/grid_icon.png", "Display/hide the grid", "Display grid");
-        JButton selectMode = addToolbarButton("../icon/grid_icon.png", "Activate/Desactivate seleciton mode", "Selection mode");
+        JButton selectMode = addToolbarButton("../icon/select_mode_icon.png", "Activate/Desactivate seleciton mode", "Selection mode");
         toolbar.add(newMap);
         toolbar.add(delMap);
         toolbar.add(resetMap);
