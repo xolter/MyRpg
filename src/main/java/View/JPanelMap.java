@@ -99,7 +99,7 @@ public class JPanelMap extends JPanel{
                     addBackgroundTile(UserInterface.getTiles()
                                       .get(backType.getName()), i * TILE_SIZE, j * TILE_SIZE);
                 }
-                if (foreType != null && mapTiles[i][j].isBegin()) {
+                if (foreType != null && mapTiles[i][j].isBegin(i, j)) {
                     addForegroundTile(UserInterface.getTiles()
                                       .get(foreType.getName()), i * TILE_SIZE, j * TILE_SIZE);
                 }

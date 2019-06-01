@@ -20,6 +20,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     private Model model;
     private boolean selectionMode;
     private boolean rubberMode;
+    private boolean objectMoving;
     private Point pressed;
     private Point released;
 
@@ -27,6 +28,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         this.model = model;
         this.selectionMode = false;
         this.rubberMode = false;
+        this.objectMoving = false;
         this.pressed = new Point();
         this.released = new Point();
     }
@@ -34,6 +36,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
+        objectMoving = false;
         if (pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1) {
             model.resetSelectedTiles(pressed, released);
         }
@@ -42,9 +45,10 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         if (!selectionMode)
             addAndRemove();
         else if (SwingUtilities.isRightMouseButton(mouseEvent)) {
+            objectMoving = true;
             model.selectObject(pressed);
         }
-        System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
+        //System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
     }
 
     @Override
@@ -62,13 +66,18 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        if (SwingUtilities.isRightMouseButton(mouseEvent))
-            return;
         if (selectionMode && pressed.x > -1 && pressed.y > -1) {
-            if (setPosition(mouseEvent, released) && released.x >= pressed.x && released.y >= pressed.y) {
-                model.select(pressed, released);
-                if (rubberMode)
-                    model.removeAllSelectedTiles(pressed, released);
+            model.resetSelectedObject(pressed);
+            if (setPosition(mouseEvent, released)) {
+                if (objectMoving) {
+                    model.moveObject(pressed, released);
+                    objectMoving = false;
+                }
+                else if (released.x >= pressed.x && released.y >= pressed.y){
+                    model.select(pressed, released);
+                    if (rubberMode)
+                        model.removeAllSelectedTiles(pressed, released);
+                }
             }
             else {
                 pressed.setLocation(-1, -1);

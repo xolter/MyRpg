@@ -1,30 +1,38 @@
 package Model;
 
+import java.awt.*;
+
 public class Tile {
     private boolean walkable;
     private boolean empty;
-    private boolean begin;
+    //private boolean begin;
+    private Point begin;
     private boolean selected;
     private boolean objectSelected;
     private Type background;
     private Type foreground;
 
-    public Tile(boolean walkable, boolean empty, boolean begin, Type background, Type foreground) {
+    public Tile(boolean walkable, boolean empty, Type background, Type foreground) {
         this.walkable = walkable;
         this.empty = empty;
-        this.begin = begin;
+        //this.begin = begin;
+        begin = new Point(-1, -1);
         this.background = background;
         this.foreground = foreground;
         this.selected = false;
         this.objectSelected = false;
     }
 
-    public boolean isBegin() {
-        return begin;
+    public boolean isBegin(int x, int y) {
+        return (begin.x == x && begin.y == y);
     }
 
-    public void setBegin(boolean begin) {
-        this.begin = begin;
+    public void setBegin(int x, int y) {
+        begin.setLocation(x, y);
+    }
+
+    public Point getBegin() {
+        return begin;
     }
 
     public Type getBackground() { return background; }

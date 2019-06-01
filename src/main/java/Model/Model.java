@@ -102,6 +102,14 @@ public class Model extends Observable {
         Map map = getCurrentMap();
         if (map != null) {
             map.selectTiles(p1, p2, false);
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void resetSelectedObject(Point p1) {
+        Map map = getCurrentMap();
+        if (map != null) {
             map.selectObject(p1, false);
         }
         setChanged();
@@ -134,6 +142,25 @@ public class Model extends Observable {
         Map map = getCurrentMap();
         if (map != null) {
             map.selectObject(point, true);
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void moveObject(Point p1, Point p2) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            Type foreground = map.getTiles()[p1.x][p1.y].getForeground();
+            Type background = map.getTiles()[p1.x][p1.y].getBackground();
+            Point begin = map.getTiles()[p1.x][p1.y].getBegin();
+            if (foreground != null) {
+                map.deleteForeground(begin.x, begin.y);
+                map.addForeground(foreground, p2.x, p2.y);
+            }
+            else {
+                map.deleteBackground(p1.x, p1.y);
+                map.addBackground(background, p2.x, p2.y);
+            }
         }
         setChanged();
         notifyObservers();

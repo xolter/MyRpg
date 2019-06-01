@@ -19,7 +19,7 @@ public class Map {
     public void initTiles() {
         for(int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
-                tiles[i][j] = new Tile(true, true, false, null, null);
+                tiles[i][j] = new Tile(true, true, null, null);
             }
         }
     }
@@ -48,10 +48,9 @@ public class Map {
                 tiles[x + i][y + j].setForeground(type);
                 tiles[x + i][y + j].setWalkable(false);
                 tiles[x + i][y + j].setEmpty(false);
-                tiles[x + i][y + j].setBegin(false);
+                tiles[x + i][y + j].setBegin(x, y);
             }
         }
-        tiles[x][y].setBegin(true);
     }
 
     public void deleteForeground(int x, int y) {
@@ -63,10 +62,9 @@ public class Map {
                 tiles[x + i][y + j].setForeground(null);
                 tiles[x + i][y + j].setWalkable(true);
                 tiles[x + i][y + j].setEmpty(true);
+                tiles[x][y].setBegin(-1, -1);
             }
         }
-        tiles[x][y].setBegin(false);
-
     }
 
     public void selectTiles(Point p1, Point p2, boolean bool) {
@@ -96,7 +94,18 @@ public class Map {
 
     public void selectObject(Point point, boolean bool) {
         Tile tile = tiles[point.x][point.y];
-        if (tile.getForeground() == null && tile.getBackground() != null) {
+        if (tile.getForeground() != null) {
+            Point begin = tile.getBegin();
+            Type type = tiles[begin.x][begin.y].getForeground();
+            int w = type.getWidth();
+            int h = type.getHeight();
+            for (int i = 0; i < w; ++i) {
+                for (int j = 0; j < h; ++j) {
+                    tiles[begin.x + i][begin.y + j].setObjectSelected(bool);
+                }
+            }
+        }
+        else if (tile.getBackground() != null) {
             tile.setObjectSelected(bool);
         }
     }
