@@ -77,7 +77,7 @@ public class Map {
         }
     }
 
-    public void setGroupTile(Type type, Point p1, Point p2) {
+    public void replaceAllSelectedTiles(Type type, Point p1, Point p2) {
         for (int i = p1.x; i <= p2.x; ++i) {
             for (int j = p1.y; j <= p2.y; ++j) {
                 tiles[i][j].setBackground(type);
@@ -85,7 +85,7 @@ public class Map {
         }
     }
 
-    public void resetGroupTile(Point p1, Point p2) {
+    public void removeAllSelectedTiles(Point p1, Point p2) {
         for (int i = p1.x; i <= p2.x; ++i) {
             for (int j = p1.y; j <= p2.y; ++j) {
                 tiles[i][j].setBackground(null);
@@ -94,6 +94,12 @@ public class Map {
         }
     }
 
+    public void selectObject(Point point, boolean bool) {
+        Tile tile = tiles[point.x][point.y];
+        if (tile.getForeground() == null && tile.getBackground() != null) {
+            tile.setObjectSelected(bool);
+        }
+    }
 
     public void deleteBackground(int x, int y) {
         tiles[x][y].setBackground(null);

@@ -102,6 +102,7 @@ public class Model extends Observable {
         Map map = getCurrentMap();
         if (map != null) {
             map.selectTiles(p1, p2, false);
+            map.selectObject(p1, false);
         }
         setChanged();
         notifyObservers();
@@ -112,18 +113,27 @@ public class Model extends Observable {
         this.curTileIsBackground = isBackground;
     }
 
-    public void setGroupTile(Type type, Point p1, Point p2) {
+    public void replaceAllSelectedTiles(Type type, Point p1, Point p2) {
         Map map = getCurrentMap();
-        if (map != null) {
-            map.setGroupTile(type, p1, p2);
+        if (map != null && p1.x > -1) {
+            map.replaceAllSelectedTiles(type, p1, p2);
         }
         setChanged();
         notifyObservers();
     }
-    public void resetGroupTile(Point p1, Point p2) {
+    public void removeAllSelectedTiles(Point p1, Point p2) {
         Map map = getCurrentMap();
         if (map != null) {
-            map.resetGroupTile(p1, p2);
+            map.removeAllSelectedTiles(p1, p2);
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void selectObject(Point point) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            map.selectObject(point, true);
         }
         setChanged();
         notifyObservers();

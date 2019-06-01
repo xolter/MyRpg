@@ -34,13 +34,17 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-        if (pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1)
+        if (pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1) {
             model.resetSelectedTiles(pressed, released);
+        }
         if (!setPosition(mouseEvent, pressed))
             return;
         if (!selectionMode)
             addAndRemove();
-        //System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
+        else if (SwingUtilities.isRightMouseButton(mouseEvent)) {
+            model.selectObject(pressed);
+        }
+        System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
     }
 
     @Override
@@ -58,11 +62,13 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
+        if (SwingUtilities.isRightMouseButton(mouseEvent))
+            return;
         if (selectionMode && pressed.x > -1 && pressed.y > -1) {
             if (setPosition(mouseEvent, released) && released.x >= pressed.x && released.y >= pressed.y) {
                 model.select(pressed, released);
                 if (rubberMode)
-                    model.resetGroupTile(pressed, released);
+                    model.removeAllSelectedTiles(pressed, released);
             }
             else {
                 pressed.setLocation(-1, -1);
@@ -96,25 +102,26 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
     public void actionPerformed(ActionEvent actionEvent) {
         String evt = actionEvent.getActionCommand();
         if (evt.equals("grass.png")) {
-            if (selectionMode)
-                model.setGroupTile(Grass, pressed, released);
+            if (selectionMode) {
+                model.replaceAllSelectedTiles(Grass, pressed, released);
+            }
             else
                 model.setCurentTile(Grass, true);
         }
         else if (evt.equals("sea.png")) {
             if (selectionMode)
-                model.setGroupTile(Sea, pressed, released);
+                model.replaceAllSelectedTiles(Sea, pressed, released);
             else
                 model.setCurentTile(Sea, true);
         }
         else if (evt.equals("sand.png")) {
             if (selectionMode)
-                model.setGroupTile(Sand, pressed, released);
+                model.replaceAllSelectedTiles(Sand, pressed, released);
             model.setCurentTile(Sand, true);
         }
         else if (evt.equals("brick.png")) {
             if (selectionMode)
-                model.setGroupTile(Brick, pressed, released);
+                model.replaceAllSelectedTiles(Brick, pressed, released);
             else
                 model.setCurentTile(Brick, true);
         }

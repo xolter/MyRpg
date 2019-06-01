@@ -5,6 +5,7 @@ public class Tile {
     private boolean empty;
     private boolean begin;
     private boolean selected;
+    private boolean objectSelected;
     private Type background;
     private Type foreground;
 
@@ -15,6 +16,7 @@ public class Tile {
         this.background = background;
         this.foreground = foreground;
         this.selected = false;
+        this.objectSelected = false;
     }
 
     public boolean isBegin() {
@@ -61,5 +63,13 @@ public class Tile {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isObjectSelected() {
+        return objectSelected;
+    }
+
+    public void setObjectSelected(boolean objectSelected) {
+        this.objectSelected = objectSelected;
     }
 }
