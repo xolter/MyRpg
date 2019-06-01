@@ -1,5 +1,7 @@
 package Model;
 
+import java.awt.*;
+
 public class Map {
     private String name;
     private int width;
@@ -66,6 +68,15 @@ public class Map {
         tiles[x][y].setBegin(false);
 
     }
+
+    public void selectTiles(Point p1, Point p2, boolean bool) {
+        for (int i = p1.x; i <= p2.x; ++i) {
+            for (int j = p1.y; j <= p2.y; ++j) {
+                tiles[i][j].setSelected(bool);
+            }
+        }
+    }
+
 
     public void deleteBackground(int x, int y) {
         tiles[x][y].setBackground(null);

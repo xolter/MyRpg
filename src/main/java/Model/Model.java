@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,6 +84,24 @@ public class Model extends Observable {
             else if(tiles[x][y].getBackground() != null) {
                 map.deleteBackground(x, y);
             }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void select(Point p1, Point p2) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            map.selectTiles(p1, p2, true);
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void resetSelectedTiles(Point p1, Point p2) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            map.selectTiles(p1, p2, false);
         }
         setChanged();
         notifyObservers();

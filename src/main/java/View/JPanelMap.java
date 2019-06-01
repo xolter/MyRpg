@@ -13,6 +13,7 @@ public class JPanelMap extends JPanel{
 
     private final int width;
     private final int height;
+    private final Color highlight;
     private final static int TILE_SIZE = 16;
     private BufferedImage backgroundImage;
     private BufferedImage foregroundImage;
@@ -40,6 +41,7 @@ public class JPanelMap extends JPanel{
         foregroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         this.controller = controller;
         this.userInterface = userInterface;
+        this.highlight = new Color(0, 255, 0, 50);
         /*if (height >= 63)
         {
             JPanel newpanel = new JPanel();
@@ -98,6 +100,11 @@ public class JPanelMap extends JPanel{
                 if (foreType != null && mapTiles[i][j].isBegin()) {
                     addForegroundTile(UserInterface.getTiles()
                                       .get(foreType.getName()), i * TILE_SIZE, j * TILE_SIZE);
+                }
+                if (mapTiles[i][j].isSelected()) {
+                    Graphics g = foregroundImage.getGraphics();
+                    g.setColor(highlight);
+                    g.fillRect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }

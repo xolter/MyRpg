@@ -19,40 +19,72 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     private Model model;
     private boolean selectionMode;
-    private Point location;
-    private MouseEvent pressed;
+    private Point pressed;
+    private Point released;
 
     public Controller(Model model) {
         this.model = model;
         this.selectionMode = false;
+        this.pressed = new Point();
+        this.released = new Point();
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
+        if (pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1)
+            model.resetSelectedTiles(pressed, released);
+        if (!setPosition(mouseEvent, pressed))
+            return;
         if (!selectionMode)
             addAndRemove(mouseEvent);
-        //System.out.println("pressed x : " + x + " y : " + y);
+        //System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
     }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
     {
-        if (!selectionMode)
+        if (selectionMode)
+            return;
+        else {
+            if (!setPosition(mouseEvent, pressed))
+                return;
             addAndRemove(mouseEvent);
+        }
         //System.out.println("dragged x : " + x + " y : " + y);
     }
 
-    public void addAndRemove(MouseEvent mouseEvent) {
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        if (selectionMode && pressed.x > -1 && pressed.y > -1) {
+            if (setPosition(mouseEvent, released) && released.x >= pressed.x && released.y >= pressed.y) {
+                model.select(pressed, released);
+            }
+            else {
+                pressed.setLocation(-1, -1);
+                released.setLocation(-1, -1);
+            }
+        }
+        //System.out.println("released x : " + released.x + " y : " + released.y);
+    }
+
+    public boolean setPosition(MouseEvent mouseEvent, Point point) {
         int x = mouseEvent.getX() / JPanelMap.getTileSize();
         int y = mouseEvent.getY() / JPanelMap.getTileSize();
-        if (x < 0 || y < 0 || x >= model.getCurrentMap().getWidth() || y >= model.getCurrentMap().getHeight())
-            return;
+        if (x < 0 || y < 0 || x >= model.getCurrentMap().getWidth() || y >= model.getCurrentMap().getHeight()) {
+            point.setLocation(-1, -1);
+            return false;
+        }
+        point.setLocation(x, y);
+        return true;
+    }
+
+    public void addAndRemove(MouseEvent mouseEvent) {
         if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            model.placeTile(x, y);
+            model.placeTile(pressed.x, pressed.y);
         }
         else {
-            model.removeTile(x, y);
+            model.removeTile(pressed.x, pressed.y);
         }
     }
 
@@ -104,5 +136,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     public void switchSelectionMode() {
         selectionMode = !selectionMode;
+        if (!selectionMode && pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1)
+            model.resetSelectedTiles(pressed, released);
     }
 }
