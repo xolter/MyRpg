@@ -19,12 +19,14 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
 
     private Model model;
     private boolean selectionMode;
+    private boolean rubberMode;
     private Point pressed;
     private Point released;
 
     public Controller(Model model) {
         this.model = model;
         this.selectionMode = false;
+        this.rubberMode = false;
         this.pressed = new Point();
         this.released = new Point();
     }
@@ -37,7 +39,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         if (!setPosition(mouseEvent, pressed))
             return;
         if (!selectionMode)
-            addAndRemove(mouseEvent);
+            addAndRemove();
         //System.out.println("pressed x : " + pressed.x + " y : " + pressed.y);
     }
 
@@ -49,7 +51,7 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         else {
             if (!setPosition(mouseEvent, pressed))
                 return;
-            addAndRemove(mouseEvent);
+            addAndRemove();
         }
         //System.out.println("dragged x : " + x + " y : " + y);
     }
@@ -59,6 +61,8 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         if (selectionMode && pressed.x > -1 && pressed.y > -1) {
             if (setPosition(mouseEvent, released) && released.x >= pressed.x && released.y >= pressed.y) {
                 model.select(pressed, released);
+                if (rubberMode)
+                    model.resetGroupTile(pressed, released);
             }
             else {
                 pressed.setLocation(-1, -1);
@@ -79,22 +83,41 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         return true;
     }
 
-    public void addAndRemove(MouseEvent mouseEvent) {
-        if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-            model.placeTile(pressed.x, pressed.y);
+    public void addAndRemove() {
+        if (rubberMode) {
+            model.removeTile(pressed.x, pressed.y);
         }
         else {
-            model.removeTile(pressed.x, pressed.y);
+            model.placeTile(pressed.x, pressed.y);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String evt = actionEvent.getActionCommand();
-        if (evt.equals("grass.png"))
-            model.setCurentTile(Grass, true);
-        else if (evt.equals("sea.png"))
-            model.setCurentTile(Sea, true);
+        if (evt.equals("grass.png")) {
+            if (selectionMode)
+                model.setGroupTile(Grass, pressed, released);
+            else
+                model.setCurentTile(Grass, true);
+        }
+        else if (evt.equals("sea.png")) {
+            if (selectionMode)
+                model.setGroupTile(Sea, pressed, released);
+            else
+                model.setCurentTile(Sea, true);
+        }
+        else if (evt.equals("sand.png")) {
+            if (selectionMode)
+                model.setGroupTile(Sand, pressed, released);
+            model.setCurentTile(Sand, true);
+        }
+        else if (evt.equals("brick.png")) {
+            if (selectionMode)
+                model.setGroupTile(Brick, pressed, released);
+            else
+                model.setCurentTile(Brick, true);
+        }
         else if (evt.equals("center.png"))
             model.setCurentTile(Center, false);
         else if (evt.equals("house.png"))
@@ -103,10 +126,6 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
             model.setCurentTile(Hero, false);
         else if (evt.equals("bluehair.png"))
             model.setCurentTile(Blue, false);
-        else if (evt.equals("sand.png"))
-            model.setCurentTile(Sand, true);
-        else if (evt.equals("brick.png"))
-            model.setCurentTile(Brick, true);
         else if (evt.equals("Save")) {
             try {
                 model.ToWorldFile("test");
@@ -138,5 +157,9 @@ public class Controller extends MouseInputAdapter implements ActionListener, Cha
         selectionMode = !selectionMode;
         if (!selectionMode && pressed.x > -1 && pressed.y > -1 && released.x > -1 && released.y > -1)
             model.resetSelectedTiles(pressed, released);
+    }
+
+    public void switchRubberMode() {
+        rubberMode = !rubberMode;
     }
 }

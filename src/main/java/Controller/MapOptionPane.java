@@ -27,5 +27,7 @@ public class MapOptionPane extends AbstractAction {
             userInterface.switchGrid();
         else if (evt.equals("Selection mode"))
             controller.switchSelectionMode();
+        else if (evt.equals("Rubber mode"))
+            controller.switchRubberMode();
     }
 }

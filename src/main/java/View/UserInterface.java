@@ -179,11 +179,13 @@ public class UserInterface extends JFrame implements Observer {
         JButton resetMap = addToolbarButton("../icon/reset_map_icon.png", "Reset current map's tiles", "Reset map");
         JButton displayGrid = addToolbarButton("../icon/grid_icon.png", "Display/hide the grid", "Display grid");
         JButton selectMode = addToolbarButton("../icon/select_mode_icon.png", "Activate/Desactivate seleciton mode", "Selection mode");
+        JButton rubberMode = addToolbarButton("../icon/select_mode_icon.png", "Activate/Desactivate seleciton mode", "Rubber mode");
         toolbar.add(newMap);
         toolbar.add(delMap);
         toolbar.add(resetMap);
         toolbar.add(displayGrid);
         toolbar.add(selectMode);
+        toolbar.add(rubberMode);
         return toolbar;
     }
 

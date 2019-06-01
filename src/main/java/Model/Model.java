@@ -112,6 +112,23 @@ public class Model extends Observable {
         this.curTileIsBackground = isBackground;
     }
 
+    public void setGroupTile(Type type, Point p1, Point p2) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            map.setGroupTile(type, p1, p2);
+        }
+        setChanged();
+        notifyObservers();
+    }
+    public void resetGroupTile(Point p1, Point p2) {
+        Map map = getCurrentMap();
+        if (map != null) {
+            map.resetGroupTile(p1, p2);
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     public void ToWorldFile(String filename) throws IOException {
         FileWriter worldfile = new FileWriter(filename + ".wrld");
         PrintWriter printer = new PrintWriter(worldfile);

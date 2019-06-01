@@ -77,6 +77,23 @@ public class Map {
         }
     }
 
+    public void setGroupTile(Type type, Point p1, Point p2) {
+        for (int i = p1.x; i <= p2.x; ++i) {
+            for (int j = p1.y; j <= p2.y; ++j) {
+                tiles[i][j].setBackground(type);
+            }
+        }
+    }
+
+    public void resetGroupTile(Point p1, Point p2) {
+        for (int i = p1.x; i <= p2.x; ++i) {
+            for (int j = p1.y; j <= p2.y; ++j) {
+                tiles[i][j].setBackground(null);
+                tiles[i][j].setForeground(null);
+            }
+        }
+    }
+
 
     public void deleteBackground(int x, int y) {
         tiles[x][y].setBackground(null);
