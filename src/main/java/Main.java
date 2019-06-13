@@ -1,13 +1,6 @@
-import Controller.Controller;
-import Model.Map;
-import Model.Model;
-import View.UserInterface;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.Observable;
-import java.util.Observer;
+import Editor.Controller.Controller;
+import Editor.Model.Model;
+import Editor.View.UserInterface;
 
 public class Main {
     public static void main(String[] args) {

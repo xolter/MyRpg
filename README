@@ -5,5 +5,53 @@ mvn package
 
 java -classpath target/classes Main
 
-java -jar target/MyRPGMaker-1.0-SNAPSHOT.jar
+===== Editor =====
 
+-- FEATURES --
+
+place/move/remove background, foreground and NPC
+set walkable tiles
+place/remove a teleporter
+
+select/deselect group of tiles (to change background)
+add/delete map
+undo/redo
+
+new project
+save project
+open project
+load tile
+play
+quit
+
+
+-- BONUS --
+
+Activate/Desactivate grid
+
+
+===== Game Engine =====
+
+-- SHORTCUTS --
+
+Up Arrow : going up
+Down Arrow : going down
+Left Arrow : going left
+Right Arrow : going right
+
+Escape : Pause menu
+Enter : interact with NPC
+
+
+
+-- FEATURES --
+
+move
+interaction
+pause menu
+
+
+-- BONUS --
+
+Scrolling
+Debug Mode

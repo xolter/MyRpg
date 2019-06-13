@@ -1,8 +1,0 @@
-View/UserInterface.class
-Model/ForeGroundObject.class
-Model/Map.class
-Main.class
-Model/Tile.class
-Model/MapManager.class
-Controller/Controller.class
-Model/Type.class
